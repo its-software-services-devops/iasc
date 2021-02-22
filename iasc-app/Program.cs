@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Its.Iasc.Options;
+using CommandLine;
 
-namespace iasc_app
+namespace its.iasc
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var result = Parser.Default.ParseArguments<InitOptions, PlanOptions, ApplyOptions>(args);
         }
     }
 }
