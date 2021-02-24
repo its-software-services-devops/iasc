@@ -1,3 +1,5 @@
 #!/bin/bash
 
-dotnet run --project iasc-app
+dotnet build
+#dotnet run --project iasc-app $*
+dotnet /d/dev/projects/workspace-its/iasc/iasc-app/bin/Debug/net5.0/iasc-app.dll $*
