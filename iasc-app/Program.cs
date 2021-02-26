@@ -1,20 +1,17 @@
-﻿using System;
-using CommandLine;
+﻿using CommandLine;
 using Its.Iasc.Options;
+using Its.Iasc.Actions;
 
-namespace its.iasc
+namespace Its.Iasc
 {
     class Program
     {
-        private static void RunInit(InitOptions o)
-        {
-            Console.WriteLine("Verbose = [{0}]", o.Verbose);
-        }
-
         public static void Main(string[] args)
         {
             var result = Parser.Default.ParseArguments<InitOptions, PlanOptions, ApplyOptions>(args)
-                .WithParsed<InitOptions>(RunInit);
+                .WithParsed<InitOptions>(ActionUtils.RunInitAction)
+                .WithParsed<PlanOptions>(ActionUtils.RunPlanAction)
+                .WithParsed<ApplyOptions>(ActionUtils.RunApplyAction);
         }
     }
 }
