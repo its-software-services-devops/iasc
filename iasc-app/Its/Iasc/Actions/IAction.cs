@@ -6,5 +6,6 @@ namespace Its.Iasc.Actions
     public interface IAction
     {
         int Run(BaseOptions options);
+        int GetLastRunStatus();
     }
 }

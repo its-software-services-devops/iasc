@@ -51,7 +51,7 @@ namespace Its.Iasc.Options
         [TestCase("long")]
         [TestCase("short")]
         [TestCase("shortnosp")]        
-        public void GlobalOptionsApply(string type)
+        public void GlobalOptionsApplyTest(string type)
         {
             string[] args = GetArgs("apply", type);
             ApplyOptions opt = TestParseArguments<ApplyOptions>(args);
@@ -62,7 +62,7 @@ namespace Its.Iasc.Options
         [TestCase("long")]
         [TestCase("short")]
         [TestCase("shortnosp")]        
-        public void GlobalOptionsInit(string type)
+        public void GlobalOptionsInitTest(string type)
         {
             string[] args = GetArgs("init", type);
             InitOptions opt = TestParseArguments<InitOptions>(args);
@@ -73,7 +73,7 @@ namespace Its.Iasc.Options
         [TestCase("long")]
         [TestCase("short")]
         [TestCase("shortnosp")]
-        public void GlobalOptionsPlan(string type)
+        public void GlobalOptionsPlanTest(string type)
         {
             string[] args = GetArgs("plan", type);
             PlanOptions opt = TestParseArguments<PlanOptions>(args);

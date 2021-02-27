@@ -4,14 +4,14 @@ using Its.Iasc.Actions;
 
 namespace Its.Iasc
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
             var result = Parser.Default.ParseArguments<InitOptions, PlanOptions, ApplyOptions>(args)
-                .WithParsed<InitOptions>(ActionUtils.RunInitAction)
-                .WithParsed<PlanOptions>(ActionUtils.RunPlanAction)
-                .WithParsed<ApplyOptions>(ActionUtils.RunApplyAction);
+                .WithParsed<InitOptions>(UtilsAction.RunInitAction)
+                .WithParsed<PlanOptions>(UtilsAction.RunPlanAction)
+                .WithParsed<ApplyOptions>(UtilsAction.RunApplyAction);
         }
     }
 }

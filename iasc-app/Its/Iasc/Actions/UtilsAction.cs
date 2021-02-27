@@ -9,7 +9,7 @@ namespace Its.Iasc.Actions
         Apply,
     }
 
-    public class ActionUtils
+    public class UtilsAction
     {
         private static IAction initAction = new ActionInit();
         private static IAction planAction = new ActionPlan();
@@ -43,7 +43,7 @@ namespace Its.Iasc.Actions
 
         public static void RunApplyAction(BaseOptions o)
         {
-            applyAction.Run(o);               
+            applyAction.Run(o);      
         }
     }
 }
