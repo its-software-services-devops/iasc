@@ -1,0 +1,10 @@
+*/bin/*
+*/obj/*
+.git
+.gitignore
+Dockerfile
+iasc
+*.bash
+*.md
+.vscode/*
+coveragereport/*
