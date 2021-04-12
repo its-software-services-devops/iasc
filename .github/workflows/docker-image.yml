@@ -50,6 +50,7 @@ jobs:
 
         echo ::set-output name=tags::${TAGS}
         echo ::set-output name=gcr_tags::${GCR_TAGS}
+        echo ::set-output name=version::${VERSION}
 
     - name: Line notification start
       uses: snow-actions/line-notify@v1.0.0
@@ -102,4 +103,4 @@ jobs:
       uses: snow-actions/line-notify@v1.0.0
       with:
         access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
-        message: "Done building [iasc] with ${{job.status}}"
+        message: "Done building [iasc] [${{ steps.prep.outputs.version }}] with status [${{job.status}}]"
