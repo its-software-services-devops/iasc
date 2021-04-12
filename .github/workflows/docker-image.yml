@@ -29,7 +29,6 @@ jobs:
         GCR_IMAGE=$ENV_GCR_IMAGE
         VERSION=latest
         GIT_HASH=$(git rev-parse --short "$GITHUB_SHA")
-        SERVICE_NAME=hello-demo-dev
 
         if [[ $GITHUB_REF == refs/tags/* ]]; then
           VERSION=${GITHUB_REF#refs/tags/}
@@ -87,7 +86,7 @@ jobs:
     - name: Build and push images
       uses: docker/build-push-action@v2
       with:
-        file: iasc-app/Dockerfile
+        file: Dockerfile
         push: true
         load: false
         tags: ${{ steps.prep.outputs.gcr_tags }}
