@@ -50,6 +50,13 @@ jobs:
 
         echo ::set-output name=tags::${TAGS}
         echo ::set-output name=gcr_tags::${GCR_TAGS}
+        echo ::set-output name=version::${VERSION}
+
+    - name: Line notification start
+      uses: snow-actions/line-notify@v1.0.0
+      with:
+        access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
+        message: "Start building [iasc] [${{ steps.prep.outputs.version }}]..."
 
     - name: SonarScanner for .NET 5 with pull request decoration support
       uses: highbyte/sonarscan-dotnet@2.0
@@ -90,3 +97,10 @@ jobs:
         push: true
         load: false
         tags: ${{ steps.prep.outputs.gcr_tags }}
+
+    - name: show job status
+      if: always()
+      uses: snow-actions/line-notify@v1.0.0
+      with:
+        access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
+        message: "Done building [iasc] [${{ steps.prep.outputs.version }}] with status [${{job.status}}]"
