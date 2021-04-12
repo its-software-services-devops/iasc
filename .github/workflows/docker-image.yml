@@ -96,3 +96,10 @@ jobs:
         push: true
         load: false
         tags: ${{ steps.prep.outputs.gcr_tags }}
+
+    - name: show job status
+      if: always()
+      uses: snow-actions/line-notify@v1.0.0
+      with:
+        access_token: ${{ secrets.LINE_ACCESS_TOKEN }}
+        message: "Done building [iasc] with ${{job.status}}"
