@@ -55,7 +55,7 @@ jobs:
       uses: highbyte/sonarscan-dotnet@2.0
       with:
         # The key of the SonarQube project
-        sonarProjectKey: its-software-services-devops_docker_iasc
+        sonarProjectKey: its-software-services-devops_iasc
         # The name of the SonarQube project
         sonarProjectName:  iasc
         # The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting.
