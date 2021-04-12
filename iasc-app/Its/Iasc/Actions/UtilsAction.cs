@@ -9,7 +9,7 @@ namespace Its.Iasc.Actions
         Apply,
     }
 
-    public class UtilsAction
+    public static class UtilsAction
     {
         private static IAction initAction = new ActionInit();
         private static IAction planAction = new ActionPlan();
