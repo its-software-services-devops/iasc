@@ -5,6 +5,7 @@ namespace Its.Iasc.Workflows.Models
     {
         public string ValuesFile { get; set; }
         public string ChartId { get; set; }
+        public string ChartUrl { get; set; }
         public string Version { get; set; }
         public string Alias { get; set; }
     }    

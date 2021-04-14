@@ -1,0 +1,64 @@
+gceRke:  
+  groupName: "its-rancher-sandbox"
+  network: "default"
+  region: "asia-southeast1"
+  clusterYaml: cluster.yaml
+
+  rke:
+    cluster_name: "its-rancher-demo"
+    kubernetes_version: "v1.19.6-rancher1-1"
+    ignore_docker_version: true
+    prefix_path: "/var/lib/toolbox/rke" #CoreOs need to use this path
+
+  outputs:
+    - kube_config_yaml      
+    - rke_state
+
+  instances:
+    - host: "its-rancher-master-01"
+      profile: "master"
+      zone: "asia-southeast1-b"
+      mode: "register" # register, unregister, remove
+      role: '["controlplane", "etcd"]'
+
+    - host: "its-rancher-worker-01"
+      profile: "worker"
+      zone: "asia-southeast1-b"
+      mode: "register"
+      role: '["worker"]'
+  profiles:
+    master:
+      terraformVmModule: "git::https://github.com/its-software-services-devops/tf-module-gcp-vm.git//modules?ref=1.0.9"
+      bootDiskImage: "projects/centos-cloud/global/images/centos-7-v20200910" #"projects/cos-cloud/global/images/cos-77-12371-1109-0" 
+      bootDiskSize: 100
+      computeType: "e2-small"    
+      localPublicKeyFile: "id_rsa.pub"
+      localPrivateKeyFile: "id_rsa"
+      deletionProtection: false
+      sshUser: "cicd"
+      localProvisionerFile: "scripts/provisioner.bash"
+      localStartupScript: "scripts/startup.bash"
+      remoteProvisionerPath: "/home/cicd"
+      tags: '["k8s-master"]'
+      externalDisks: []
+      serviceAccount: "devops-cicd@its-artifact-commons.iam.gserviceaccount.com"
+      enableNatIP: true
+      remoteExecByNatIP: true
+
+    worker:
+      terraformVmModule: "git::https://github.com/its-software-services-devops/tf-module-gcp-vm.git//modules?ref=1.0.9"
+      bootDiskImage: "projects/centos-cloud/global/images/centos-7-v20200910" #"projects/cos-cloud/global/images/cos-77-12371-1109-0" 
+      bootDiskSize: 100
+      computeType: "e2-small"    
+      localPublicKeyFile: "id_rsa.pub"
+      localPrivateKeyFile: "id_rsa"
+      deletionProtection: false
+      sshUser: "cicd"
+      localProvisionerFile: "scripts/provisioner.bash"
+      localStartupScript: "scripts/startup.bash"
+      remoteProvisionerPath: "/home/cicd"
+      tags: '["k8s-worker"]'
+      externalDisks: []
+      serviceAccount: "devops-cicd@its-artifact-commons.iam.gserviceaccount.com"
+      enableNatIP: true
+      remoteExecByNatIP: true

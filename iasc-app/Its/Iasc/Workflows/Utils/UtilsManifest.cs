@@ -1,6 +1,6 @@
 using Its.Iasc.Workflows.Models;
 
-namespace Its.Iasc.Workflows
+namespace Its.Iasc.Workflows.Utils
 {
     public static class UtilsManifest
     {
@@ -19,9 +19,14 @@ namespace Its.Iasc.Workflows
                     iasc.ChartId = defaultChart;
                 }
 
+                if (iasc.ChartUrl == null)
+                {
+                    iasc.ChartUrl = chart.ChartUrl;
+                }
+
                 if (iasc.Version == null)
                 {
-                    iasc.Version = chart.DefaultVersion;
+                    iasc.Version = chart.Version;
                 }
 
                 if (iasc.Alias == null)

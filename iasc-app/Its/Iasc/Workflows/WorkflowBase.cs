@@ -1,4 +1,4 @@
-
+using Its.Iasc.Workflows.Utils;
 using Its.Iasc.Workflows.Models;
 
 namespace Its.Iasc.Workflows
@@ -12,6 +12,17 @@ namespace Its.Iasc.Workflows
         public int Load(string manifestContent)
         {
             manifest = UtilsManifest.Normalize(ParseManifest(manifestContent));
+            return 0;
+        }
+
+        public int Transform()
+        {
+            foreach (var iasc in manifest.InfraIasc)
+            {
+                UtilsHelm.HelmAdd(iasc);
+                UtilsHelm.HelmTemplate(iasc);
+            }
+
             return 0;
         }
 

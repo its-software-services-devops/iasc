@@ -11,13 +11,14 @@ config:
 charts:
   helm-terraform-gcp:
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
-    defaultVersion: 1.1.5-rc8
+    version: 1.1.5-rc8
 
 infraIasc:
   - valuesFile: iasc-its-global.yaml
     chartId: helm-terraform-gcp
     version: 1.1.5-rc8
     alias: iasc-its-global
+    chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
 
   - valuesFile: iasc-its-gce-manager.yaml
   - valuesFile: iasc-its-gce-rke.yaml
@@ -45,7 +46,7 @@ infraIasc:
             var chart = m.Charts["helm-terraform-gcp"];
 
             Assert.AreEqual("https://its-software-services-devops.github.io/helm-terraform-gcp/", chart.ChartUrl);
-            Assert.AreEqual("1.1.5-rc8", chart.DefaultVersion);
+            Assert.AreEqual("1.1.5-rc8", chart.Version);
 
             var iasc = m.InfraIasc[0];
             Assert.AreEqual("iasc-its-global.yaml", iasc.ValuesFile);
@@ -57,7 +58,16 @@ infraIasc:
             Assert.AreEqual("iasc-its-gce-rke.yaml", nrmIasc.ValuesFile);
             Assert.AreEqual("helm-terraform-gcp", nrmIasc.ChartId);
             Assert.AreEqual("1.1.5-rc8", nrmIasc.Version);
-            Assert.AreEqual("default-3", nrmIasc.Alias);            
+            Assert.AreEqual("default-3", nrmIasc.Alias);
+            Assert.AreEqual("https://its-software-services-devops.github.io/helm-terraform-gcp/", nrmIasc.ChartUrl);    
         }
+
+        [Test]
+        public void YamlTransformTest()
+        {
+            var wf = new WorkflowGeneric();
+            var result = wf.Load(yaml1);
+            wf.Transform();
+        }        
     }
 }
