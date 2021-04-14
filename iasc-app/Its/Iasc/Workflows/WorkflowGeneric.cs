@@ -7,7 +7,7 @@ namespace Its.Iasc.Workflows
 {
     public class WorkflowGeneric : WorkflowBase
     {
-        private IDeserializer deserializer = null;
+        private readonly IDeserializer deserializer = null;
 
         public WorkflowGeneric()
         {
