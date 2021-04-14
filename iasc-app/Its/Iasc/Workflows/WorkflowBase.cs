@@ -11,7 +11,7 @@ namespace Its.Iasc.Workflows
 
         public int Load(string manifestContent)
         {
-            manifest = ParseManifest(manifestContent);
+            manifest = UtilsManifest.Normalize(ParseManifest(manifestContent));
             return 0;
         }
 
