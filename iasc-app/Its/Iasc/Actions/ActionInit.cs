@@ -12,8 +12,8 @@ namespace Its.Iasc.Actions
 
             var wf = GetWorkflow();
             wf.GetContext().SourceDir = "samples/";
-            
-            var result = wf.LoadFile("manifest.yaml");
+
+            wf.LoadFile("manifest.yaml");
             wf.Transform();
 
             return 0;
