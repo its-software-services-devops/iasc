@@ -34,12 +34,14 @@ infraIasc:
         public void YamlParseNormalTest()
         {
             var wf = new WorkflowGeneric();
+            var ctx = wf.GetContext();
 
             var result = wf.Load(yaml1);
             var m = wf.GetManifest();
 
             Assert.AreEqual(0, result);
             Assert.NotNull(m);
+            Assert.NotNull(ctx);
 
             Assert.AreEqual("helm-terraform-gcp", m.Config.DefaultChartId);
             Assert.AreEqual(1, m.Charts.Count);
@@ -80,7 +82,7 @@ infraIasc:
         {
           var path = "dummy.yaml";
           File.WriteAllText(path, yaml1);
-                    
+
           var wf = new WorkflowGeneric();            
           var result = wf.LoadFile(path);
 

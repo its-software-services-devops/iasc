@@ -6,18 +6,15 @@ namespace Its.Iasc.Actions
 {
     public class ActionInit : BaseAction
     {
-        private readonly IWorkflow wf = new WorkflowGeneric();
-
-        public ActionInit()
-        {
-            wf.GetContext().SourceDir = "samples/";
-        }
-
         protected override int RunAction(BaseOptions options)
         {
             Console.WriteLine("Action = [Init] Verbose = [{0}]", options.Verbosity); 
-            //var result = wf.LoadFile("manifest.yaml");
-            //wf.Transform();
+
+            var wf = GetWorkflow();
+            wf.GetContext().SourceDir = "samples/";
+            
+            var result = wf.LoadFile("manifest.yaml");
+            wf.Transform();
 
             return 0;
         }
