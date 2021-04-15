@@ -5,28 +5,31 @@ namespace Its.Iasc.Workflows.Utils
 {
     public static class UtilsHelm
     {
-        private static string helmCmd = "helm";
+        private static readonly string defaultHelmCmd = "helm";
+        private static string helmCmd = defaultHelmCmd;
         private static string helmAddArg = "repo add {0} {1}";
+        private static string helmTplArg = "template {0} {1}/{2} -f {3} --version {4}";
+
+        public static void SetCmd(string cmd)
+        {
+            helmCmd = cmd;
+        }
+
+        public static void ResetHelmCmd()
+        {
+            helmCmd = defaultHelmCmd;
+        }
 
         public static void HelmAdd(Infra cfg)
         {
             string arg = string.Format(helmAddArg, cfg.Alias, cfg.ChartUrl);
-            using(Process pProcess = new Process())
-            {
-                pProcess.StartInfo.FileName = helmCmd;
-                pProcess.StartInfo.Arguments = arg;
-                pProcess.StartInfo.UseShellExecute = false;
-                pProcess.StartInfo.RedirectStandardOutput = true;
-                pProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                pProcess.StartInfo.CreateNoWindow = true; //not diplay a windows
-                pProcess.Start();
-                string output = pProcess.StandardOutput.ReadToEnd();
-                pProcess.WaitForExit();
-            }
+            Utils.Exec(helmCmd, arg);
         }
 
         public static void HelmTemplate(Infra cfg)
         {
+            string arg = string.Format(helmTplArg, cfg.ChartId, cfg.Alias, cfg.ChartId, cfg.ValuesFile, cfg.Version);
+            Utils.Exec(helmCmd, arg);
         }        
     }
 }

@@ -1,4 +1,6 @@
+using System.IO;
 using NUnit.Framework;
+using Its.Iasc.Workflows.Utils;
 
 namespace Its.Iasc.Workflows
 {
@@ -65,9 +67,26 @@ infraIasc:
         [Test]
         public void YamlTransformTest()
         {
-            var wf = new WorkflowGeneric();
-            var result = wf.Load(yaml1);
-            wf.Transform();
-        }        
+          var wf = new WorkflowGeneric();            
+          var result = wf.Load(yaml1);
+
+          UtilsHelm.SetCmd("echo");
+          wf.Transform();
+          UtilsHelm.ResetHelmCmd();
+        }
+
+        [Test]
+        public void YamlLoadFileTest()
+        {
+          var path = "dummy.yaml";
+          File.WriteAllText(path, yaml1);
+                    
+          var wf = new WorkflowGeneric();            
+          var result = wf.LoadFile(path);
+
+          UtilsHelm.SetCmd("echo");
+          wf.Transform();
+          UtilsHelm.ResetHelmCmd();
+        }
     }
 }
