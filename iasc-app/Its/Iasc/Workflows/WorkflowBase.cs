@@ -7,7 +7,7 @@ namespace Its.Iasc.Workflows
     public abstract class WorkflowBase : IWorkflow
     {
         private Manifest manifest = null;
-        private Context ctx = new Context();
+        private readonly Context ctx = new Context();
         
         protected abstract Manifest ParseManifest(string manifestContent);
 

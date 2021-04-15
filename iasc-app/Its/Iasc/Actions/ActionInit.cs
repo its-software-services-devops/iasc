@@ -6,7 +6,7 @@ namespace Its.Iasc.Actions
 {
     public class ActionInit : BaseAction
     {
-        private WorkflowGeneric wf = new WorkflowGeneric();
+        private readonly IWorkflow wf = new WorkflowGeneric();
 
         public ActionInit()
         {
