@@ -24,7 +24,7 @@ COPY iasc.sln .
 
 RUN ls -lrt
 RUN dotnet restore iasc-app/iasc-app.csproj
-RUN dotnet publish iasc-app/iasc-app.csproj -c release -o /app --no-restore -p:PackageVersion=develop-abc1234 --version-suffix "develop-abc1234"
+RUN dotnet publish iasc-app/iasc-app.csproj -c release -o /app --no-restore -p:PackageVersion=0.0.0
 
 
 ##### final stage/image
