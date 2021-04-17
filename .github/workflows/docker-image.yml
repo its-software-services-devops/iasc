@@ -97,6 +97,7 @@ jobs:
         push: true
         load: false
         tags: ${{ steps.prep.outputs.gcr_tags }}
+        build-args: version=${{ steps.prep.outputs.version }}
 
     - name: show job status
       if: always()
