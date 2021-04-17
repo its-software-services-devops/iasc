@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Its.Iasc.Workflows.Models;
 
 namespace Its.Iasc.Workflows.Utils
@@ -26,10 +25,12 @@ namespace Its.Iasc.Workflows.Utils
             Utils.Exec(helmCmd, arg);
         }
 
-        public static void HelmTemplate(Infra cfg)
+        public static string HelmTemplate(Infra cfg)
         {
             string arg = string.Format(helmTplArg, cfg.ChartId, cfg.Alias, cfg.ChartId, cfg.ValuesFile, cfg.Version);
-            Utils.Exec(helmCmd, arg);
+            string output = Utils.Exec(helmCmd, arg);
+
+            return output;
         }        
     }
 }

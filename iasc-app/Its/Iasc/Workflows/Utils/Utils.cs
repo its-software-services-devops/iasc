@@ -1,3 +1,4 @@
+using Serilog;
 using System.Diagnostics;
 
 namespace Its.Iasc.Workflows.Utils
@@ -7,6 +8,9 @@ namespace Its.Iasc.Workflows.Utils
         public static string Exec(string cmd, string argv)
         {
             string output = "";
+            string cmdWithArg = string.Format("{0} {1}", cmd, argv);
+            
+            Log.Information("Executing command [{0}]...", cmdWithArg);
 
             using(Process pProcess = new Process())
             {
@@ -21,6 +25,7 @@ namespace Its.Iasc.Workflows.Utils
                 pProcess.WaitForExit();
             }
 
+            Log.Debug(output);
             return output;            
         } 
     }
