@@ -1,4 +1,5 @@
 ﻿using Serilog;
+using System.Reflection;
 using CommandLine;
 using Its.Iasc.Options;
 using Its.Iasc.Actions;
@@ -14,7 +15,9 @@ namespace Its.Iasc
                 .CreateLogger();
             Log.Logger = log;
 
-            Log.Information("Running [iasc] version [1.1.0]");
+            var assembly = Assembly.GetExecutingAssembly();
+            var assemblyVersion = assembly.GetName().Version;
+            Log.Information("Running [iasc] version [{0}]", assemblyVersion);
 
             Parser.Default.ParseArguments<InitOptions, PlanOptions, ApplyOptions>(args)
                 .WithParsed<InitOptions>(UtilsAction.RunInitAction)
