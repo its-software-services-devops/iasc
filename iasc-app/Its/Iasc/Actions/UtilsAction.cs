@@ -7,6 +7,7 @@ namespace Its.Iasc.Actions
         Init,
         Plan,
         Apply,
+        Info,
     }
 
     public static class UtilsAction
@@ -14,6 +15,7 @@ namespace Its.Iasc.Actions
         private static IAction initAction = new ActionInit();
         private static IAction planAction = new ActionPlan();
         private static IAction applyAction = new ActionApply();
+        private static IAction infoAction = new ActionInfo();
 
         public static void SetAction(ActionType type, IAction action)
         {
@@ -29,6 +31,10 @@ namespace Its.Iasc.Actions
             {
                 initAction = action;
             } 
+            else if (type == ActionType.Info)
+            {
+                infoAction = action;
+            }             
         }
 
         public static void RunInitAction(BaseOptions o)
@@ -45,5 +51,10 @@ namespace Its.Iasc.Actions
         {
             applyAction.Run(o);      
         }
+
+        public static void RunInfoAction(BaseOptions o)
+        {
+            infoAction.Run(o);
+        }        
     }
 }

@@ -52,5 +52,6 @@ RUN terraform -v
 WORKDIR /app
 COPY --from=build /app .
 RUN ls -lrt
+RUN dotnet iasc-app.dll info
 
 ENTRYPOINT ["dotnet", "iasc-app.dll"]

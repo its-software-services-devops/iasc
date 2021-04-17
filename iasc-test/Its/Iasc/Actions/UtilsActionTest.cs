@@ -52,6 +52,15 @@ namespace Its.Iasc.Actions
             int valueReturned = RunAction(ActionType.Apply, UtilsAction.RunApplyAction, valueNeed);
 
             Assert.AreEqual(valueNeed, valueReturned, "Last run status not match!!!");
-        }               
+        } 
+
+        [Test]
+        public void RunInfoActionTest()
+        {
+            int valueNeed = 9999;
+            int valueReturned = RunAction(ActionType.Info, UtilsAction.RunInfoAction, valueNeed);
+
+            Assert.AreEqual(valueNeed, valueReturned, "Last run status not match!!!");
+        }                       
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Serilog;
-using System.Reflection;
 using CommandLine;
+using System.Reflection;
 using Its.Iasc.Options;
 using Its.Iasc.Actions;
 
@@ -19,10 +19,11 @@ namespace Its.Iasc
             var assemblyVersion = assembly.GetName().Version;
             Log.Information("Running [iasc] version [{0}]", assemblyVersion);
 
-            Parser.Default.ParseArguments<InitOptions, PlanOptions, ApplyOptions>(args)
+            Parser.Default.ParseArguments<InitOptions, PlanOptions, ApplyOptions, InfoOptions>(args)
                 .WithParsed<InitOptions>(UtilsAction.RunInitAction)
                 .WithParsed<PlanOptions>(UtilsAction.RunPlanAction)
-                .WithParsed<ApplyOptions>(UtilsAction.RunApplyAction);
+                .WithParsed<ApplyOptions>(UtilsAction.RunApplyAction)
+                .WithParsed<InfoOptions>(UtilsAction.RunInfoAction);
         }
     }
 }
