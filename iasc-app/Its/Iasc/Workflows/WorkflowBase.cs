@@ -36,8 +36,6 @@ namespace Its.Iasc.Workflows
 
         public int Transform()
         {
-            var configs = new List<string>();
-
             UtilsHelm.SetSourceDir(ctx.SourceDir);
             
             foreach (var iasc in manifest.InfraIasc)

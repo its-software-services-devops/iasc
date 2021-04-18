@@ -10,7 +10,7 @@ namespace Its.Iasc.Transformers
 {
     public class Yaml2Terraform : ITransformer
     {
-        private Context context = null;
+        private readonly Context context = null;
 
         public Yaml2Terraform(Context ctx)
         {
@@ -19,7 +19,7 @@ namespace Its.Iasc.Transformers
 
         private void WriteFileContent(string fname, List<string> lines)
         {
-            if (fname.Equals(""))
+            if (string.IsNullOrEmpty(fname))
             {
                 return;
             }
@@ -89,7 +89,7 @@ namespace Its.Iasc.Transformers
 
             ProcessLines(lines, cfg);
 
-            return null;
+            return lines;
         }
     }
 }
