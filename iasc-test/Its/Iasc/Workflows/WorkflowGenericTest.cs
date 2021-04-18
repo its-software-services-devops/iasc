@@ -83,7 +83,7 @@ infraIasc:
           var path = "dummy.yaml";
           File.WriteAllText(path, yaml1);
 
-          var wf = new WorkflowGeneric();            
+          var wf = new WorkflowGeneric();    
           var result = wf.LoadFile(path);
 
           UtilsHelm.SetCmd("echo");

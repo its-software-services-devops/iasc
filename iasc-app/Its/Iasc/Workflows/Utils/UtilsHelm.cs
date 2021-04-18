@@ -1,9 +1,11 @@
+using System;
 using Its.Iasc.Workflows.Models;
 
 namespace Its.Iasc.Workflows.Utils
 {
     public static class UtilsHelm
     {
+        private static string srcDir = ".";
         private static readonly string defaultHelmCmd = "helm";
         private static string helmCmd = defaultHelmCmd;
         private static string helmAddArg = "repo add {0} {1}";
@@ -12,6 +14,11 @@ namespace Its.Iasc.Workflows.Utils
         public static void SetCmd(string cmd)
         {
             helmCmd = cmd;
+        }
+
+        public static void SetSourceDir(string sourceDir)
+        {
+            srcDir = sourceDir;
         }
 
         public static void ResetHelmCmd()
@@ -27,7 +34,8 @@ namespace Its.Iasc.Workflows.Utils
 
         public static string HelmTemplate(Infra cfg)
         {
-            string arg = string.Format(helmTplArg, cfg.ChartId, cfg.Alias, cfg.ChartId, cfg.ValuesFile, cfg.Version);
+            string valueFilePath = String.Format("{0}/{1}", srcDir, cfg.ValuesFile);
+            string arg = string.Format(helmTplArg, cfg.ChartId, cfg.Alias, cfg.ChartId, valueFilePath, cfg.Version);
             string output = Utils.Exec(helmCmd, arg);
 
             return output;

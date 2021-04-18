@@ -1,6 +1,9 @@
+using System;
 using System.IO;
+using System.Collections.Generic;
 using Its.Iasc.Workflows.Utils;
 using Its.Iasc.Workflows.Models;
+using Its.Iasc.Transformers;
 
 namespace Its.Iasc.Workflows
 {
@@ -18,8 +21,9 @@ namespace Its.Iasc.Workflows
         }
         public int LoadFile(string fileName)
         {
-            Directory.SetCurrentDirectory(ctx.SourceDir);
-            string readText = File.ReadAllText(fileName);
+            string inputPath = String.Format("{0}/{1}", ctx.SourceDir, fileName);
+            
+            string readText = File.ReadAllText(inputPath);
             Load(readText);
           
             return 0;
@@ -32,10 +36,20 @@ namespace Its.Iasc.Workflows
 
         public int Transform()
         {
+            var configs = new List<string>();
+
+            UtilsHelm.SetSourceDir(ctx.SourceDir);
+            
             foreach (var iasc in manifest.InfraIasc)
             {
                 UtilsHelm.HelmAdd(iasc);
-                UtilsHelm.HelmTemplate(iasc);
+                string output = UtilsHelm.HelmTemplate(iasc);
+
+                var items = new List<string>();
+                items.Add(output);
+
+                var xform = new Yaml2Terraform(ctx);
+                xform.Transform(items, iasc);
             }
 
             return 0;

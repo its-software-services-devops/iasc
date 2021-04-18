@@ -8,5 +8,8 @@ charts:
 
 infraIasc:
   - valuesFile: iasc-its-global.yaml
+    alias: global
   - valuesFile: iasc-its-gce-manager.yaml
+    alias: gce_manager
   - valuesFile: iasc-its-gce-rke.yaml
+    alias: gce_rke
