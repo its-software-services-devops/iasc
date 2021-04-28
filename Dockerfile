@@ -1,3 +1,4 @@
+ARG version
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 
 WORKDIR /install
@@ -24,7 +25,7 @@ COPY iasc.sln .
 
 RUN ls -lrt
 RUN dotnet restore iasc-app/iasc-app.csproj
-RUN dotnet publish iasc-app/iasc-app.csproj -c release -o /app --no-restore
+RUN dotnet publish iasc-app/iasc-app.csproj -c release -o /app --no-restore -p:PackageVersion=${version}
 
 
 ##### final stage/image
@@ -51,5 +52,6 @@ RUN terraform -v
 WORKDIR /app
 COPY --from=build /app .
 RUN ls -lrt
+RUN dotnet iasc-app.dll info
 
 ENTRYPOINT ["dotnet", "iasc-app.dll"]

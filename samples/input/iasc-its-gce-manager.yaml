@@ -1,0 +1,28 @@
+gceSets:  
+  groupName: "its-manager"
+  network: "default"
+  region: "asia-southeast1"
+
+  instances:
+    - host: "its-manager-01"
+      profile: "manager"
+      zone: "asia-southeast1-b"
+
+  profiles:
+    manager:
+      terraformVmModule: "git::https://github.com/its-software-services-devops/tf-module-gcp-vm.git//modules?ref=1.0.9"
+      bootDiskImage: "projects/centos-cloud/global/images/centos-7-v20200910"
+      bootDiskSize: 100
+      computeType: "e2-small"    
+      localPublicKeyFile: "id_rsa.pub"
+      localPrivateKeyFile: "id_rsa"
+      deletionProtection: false
+      sshUser: "cicd"
+      localProvisionerFile: "scripts/manager.bash"
+      localStartupScript: "scripts/startup.bash"
+      remoteProvisionerPath: "/home/cicd"
+      tags: '["k8s-manager"]'
+      externalDisks: []
+      serviceAccount: "devops-cicd@its-artifact-commons.iam.gserviceaccount.com"
+      enableNatIP: true
+      remoteExecByNatIP: true

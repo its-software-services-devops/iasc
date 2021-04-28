@@ -1,13 +1,21 @@
-using System;
 using Its.Iasc.Options;
 
+using Serilog;
 namespace Its.Iasc.Actions
 {
     public class ActionInit : BaseAction
     {
         protected override int RunAction(BaseOptions options)
         {
-            Console.WriteLine("Action = [Init] Verbose = [{0}]", options.Verbosity);
+            Log.Information("Action = [Init] Verbose = [{0}]", options.Verbosity); 
+
+            var wf = GetWorkflow();
+            wf.GetContext().SourceDir = "samples/input";
+            wf.GetContext().WipDir = "samples/wip";
+
+            wf.LoadFile("manifest.yaml");
+            wf.Transform();
+
             return 0;
         }
     }

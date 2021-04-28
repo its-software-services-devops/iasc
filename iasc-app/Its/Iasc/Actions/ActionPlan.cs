@@ -1,4 +1,4 @@
-using System;
+using Serilog;
 using Its.Iasc.Options;
 
 namespace Its.Iasc.Actions
@@ -7,7 +7,7 @@ namespace Its.Iasc.Actions
     {
         protected override int RunAction(BaseOptions options)
         {
-            Console.WriteLine("Action = [Plan] Verbose = [{0}]", options.Verbosity);
+            Log.Information("Action = [Plan] Verbose = [{0}]", options.Verbosity); 
             return 0;
         }
     }
