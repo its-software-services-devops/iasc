@@ -38,6 +38,7 @@ namespace Its.Iasc.Workflows
         {
             UtilsHelm.SetSourceDir(ctx.SourceDir);
             
+            ITransformer xform = new DefaultTransformer(ctx);
             foreach (var iasc in manifest.InfraIasc)
             {
                 UtilsHelm.HelmAdd(iasc);
@@ -46,8 +47,18 @@ namespace Its.Iasc.Workflows
                 var items = new List<string>();
                 items.Add(output);
 
-                var xform = new Yaml2Terraform(ctx);
+                //This can be replace with factory pattern                
+                if (string.IsNullOrEmpty(iasc.Transformer))
+                {
+                    xform = new DefaultTransformer(ctx);
+                }
+                else if (iasc.Transformer.Equals("yaml2tf"))
+                {
+                    xform = new Yaml2Terraform(ctx);
+                } 
                 xform.Transform(items, iasc);
+
+                items.Clear();                           
             }
 
             return 0;

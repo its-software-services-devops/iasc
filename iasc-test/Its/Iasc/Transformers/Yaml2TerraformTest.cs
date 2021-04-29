@@ -28,6 +28,10 @@ namespace Its.Iasc.Transformers
 
     - valuesFile: iasc-its-gce-manager.yaml
     - valuesFile: iasc-its-gce-rke.yaml
+---
+02_gce_aaaaa.tf: |       
+  config:
+    defaultChartId: helm-terraform-gcp
 ";
         [SetUp]
         public void Setup()

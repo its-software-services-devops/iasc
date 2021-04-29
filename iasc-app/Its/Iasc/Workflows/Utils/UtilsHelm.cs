@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Its.Iasc.Workflows.Models;
 
 namespace Its.Iasc.Workflows.Utils
@@ -9,7 +10,7 @@ namespace Its.Iasc.Workflows.Utils
         private static readonly string defaultHelmCmd = "helm";
         private static string helmCmd = defaultHelmCmd;
         private static string helmAddArg = "repo add {0} {1}";
-        private static string helmTplArg = "template {0} {1}/{2} -f {3} --version {4}";
+        private static string helmTplArg = "template {0} {1}/{2} {3} --version {4}";
 
         public static void SetCmd(string cmd)
         {
@@ -34,7 +35,16 @@ namespace Its.Iasc.Workflows.Utils
 
         public static string HelmTemplate(Infra cfg)
         {
-            string valueFilePath = String.Format("{0}/{1}", srcDir, cfg.ValuesFile);
+            var valueFiles = new List<string>();
+
+            foreach (string file in cfg.ValuesFiles)
+            {
+                string path = String.Format("-f {0}/{1}", srcDir, file);
+                valueFiles.Add(path);
+            }
+
+            string valueFilePath = String.Join(" ", valueFiles.ToArray());
+
             string arg = string.Format(helmTplArg, cfg.ChartId, cfg.Alias, cfg.ChartId, valueFilePath, cfg.Version);
             string output = Utils.Exec(helmCmd, arg);
 

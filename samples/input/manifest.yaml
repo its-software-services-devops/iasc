@@ -6,10 +6,12 @@ charts:
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
     version: 1.1.5-rc8
 
+#preprocessor:
+#  copy:
+#    - from: https://xxx/xxxxsdfsdfsd.com/sdfsdfsdf/ccccc.txt
+#      to: ccccc.txt
+
 infraIasc:
-  - valuesFile: iasc-its-global.yaml
-    alias: global
-  - valuesFile: iasc-its-gce-manager.yaml
-    alias: gce_manager
-  - valuesFile: iasc-its-gce-rke.yaml
-    alias: gce_rke
+  - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml, iasc-its-gce-rke.yaml]
+    transformer: yaml2tf
+    alias: gcp
