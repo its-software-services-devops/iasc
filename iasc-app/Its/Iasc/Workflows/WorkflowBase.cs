@@ -38,6 +38,7 @@ namespace Its.Iasc.Workflows
         {
             UtilsHelm.SetSourceDir(ctx.SourceDir);
             
+            ITransformer xform = new DefaultTransformer(ctx);
             foreach (var iasc in manifest.InfraIasc)
             {
                 UtilsHelm.HelmAdd(iasc);
@@ -46,8 +47,7 @@ namespace Its.Iasc.Workflows
                 var items = new List<string>();
                 items.Add(output);
 
-                //This can be replace with factory pattern
-                ITransformer xform = null;
+                //This can be replace with factory pattern                
                 if (string.IsNullOrEmpty(iasc.Transformer))
                 {
                     xform = new DefaultTransformer(ctx);
