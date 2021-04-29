@@ -1,3 +1,4 @@
+using System;
 
 namespace Its.Iasc.Workflows.Models
 {
@@ -13,8 +14,8 @@ namespace Its.Iasc.Workflows.Models
 
         public Infra()
         {
-            Values = new string[0];
-            ValuesFiles = new string[0];
+            Values = Array.Empty<string>();
+            ValuesFiles = Array.Empty<string>();
         }         
     } 
 }
