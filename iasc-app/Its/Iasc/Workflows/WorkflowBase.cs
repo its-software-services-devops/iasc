@@ -46,8 +46,19 @@ namespace Its.Iasc.Workflows
                 var items = new List<string>();
                 items.Add(output);
 
-                var xform = new Yaml2Terraform(ctx);
+                //This can be replace with factory pattern
+                ITransformer xform = null;
+                if (string.IsNullOrEmpty(iasc.Transformer))
+                {
+                    xform = new DefaultTransformer(ctx);
+                }
+                else if (iasc.Transformer.Equals("yaml2tf"))
+                {
+                    xform = new Yaml2Terraform(ctx);
+                } 
                 xform.Transform(items, iasc);
+
+                items.Clear();                           
             }
 
             return 0;

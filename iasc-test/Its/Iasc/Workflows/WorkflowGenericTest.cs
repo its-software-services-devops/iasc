@@ -16,14 +16,18 @@ charts:
     version: 1.1.5-rc8
 
 infraIasc:
-  - valuesFile: iasc-its-global.yaml
+  - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml, iasc-its-gce-rke.yaml]
+    transformer: yaml2tf
+    alias: global
+
+  - valuesFiles: [iasc-its-gce-rke.yaml]
     chartId: helm-terraform-gcp
     version: 1.1.5-rc8
     alias: iasc-its-global
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
 
-  - valuesFile: iasc-its-gce-manager.yaml
-  - valuesFile: iasc-its-gce-rke.yaml
+  - valuesFiles: [iasc-its-gce-manager.yaml]
+  - valuesFiles: [iasc-its-gce-rke.yaml]
 ";
         [SetUp]
         public void Setup()
@@ -45,7 +49,7 @@ infraIasc:
 
             Assert.AreEqual("helm-terraform-gcp", m.Config.DefaultChartId);
             Assert.AreEqual(1, m.Charts.Count);
-            Assert.AreEqual(3, m.InfraIasc.Length);
+            Assert.AreEqual(4, m.InfraIasc.Length);
 
             var chart = m.Charts["helm-terraform-gcp"];
 
@@ -53,13 +57,13 @@ infraIasc:
             Assert.AreEqual("1.1.5-rc8", chart.Version);
 
             var iasc = m.InfraIasc[0];
-            Assert.AreEqual("iasc-its-global.yaml", iasc.ValuesFile);
+            Assert.AreEqual("iasc-its-global.yaml", iasc.ValuesFiles[0]);
             Assert.AreEqual("helm-terraform-gcp", iasc.ChartId);
             Assert.AreEqual("1.1.5-rc8", iasc.Version);
-            Assert.AreEqual("iasc-its-global", iasc.Alias);
+            Assert.AreEqual("global", iasc.Alias);
 
             var nrmIasc = m.InfraIasc[2];
-            Assert.AreEqual("iasc-its-gce-rke.yaml", nrmIasc.ValuesFile);
+            Assert.AreEqual("iasc-its-gce-manager.yaml", nrmIasc.ValuesFiles[0]);
             Assert.AreEqual("helm-terraform-gcp", nrmIasc.ChartId);
             Assert.AreEqual("1.1.5-rc8", nrmIasc.Version);
             Assert.AreEqual("default-3", nrmIasc.Alias);

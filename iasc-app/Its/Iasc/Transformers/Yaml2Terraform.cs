@@ -56,6 +56,11 @@ namespace Its.Iasc.Transformers
                 if (breakRegex.IsMatch(line))
                 {
                     //Skipping the ---
+                    if (!string.IsNullOrEmpty(currentFname))
+                    {
+                        WriteFileContent(currentFname, contents);
+                        contents.Clear();
+                    }
                 }
                 else if (cfgMapRegex.IsMatch(line))
                 {
