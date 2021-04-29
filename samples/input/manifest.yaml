@@ -9,9 +9,16 @@ charts:
 #preprocessor:
 #  copy:
 #    - from: https://xxx/xxxxsdfsdfsd.com/sdfsdfsdf/ccccc.txt
-#      to: ccccc.txt
+#      toFile: ccccc.txt
+#    - from: scripts/*.bash
+#      toFolder: scripts
+#    - from: configs/*.yaml
+#      toFolder: configs
 
 infraIasc:
   - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml, iasc-its-gce-rke.yaml]
     transformer: yaml2tf
     alias: gcp
+    values:
+    - --set-string a.bbbb.xxx=1234
+    - --set a.bbbb.enabled=true

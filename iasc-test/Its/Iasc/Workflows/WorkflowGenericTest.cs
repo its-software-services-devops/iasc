@@ -19,6 +19,9 @@ infraIasc:
   - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml, iasc-its-gce-rke.yaml]
     transformer: yaml2tf
     alias: global
+    values:
+    - --set-string a.bbbb.xxx=1234
+    - --set a.bbbb.enabled=true
 
   - valuesFiles: [iasc-its-gce-rke.yaml]
     chartId: helm-terraform-gcp
