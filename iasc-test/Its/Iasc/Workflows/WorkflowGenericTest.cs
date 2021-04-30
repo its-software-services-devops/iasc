@@ -1,6 +1,8 @@
+using Moq;
 using System.IO;
 using NUnit.Framework;
 using Its.Iasc.Workflows.Utils;
+using Its.Iasc.Copier;
 
 namespace Its.Iasc.Workflows
 {
@@ -14,6 +16,14 @@ charts:
   helm-terraform-gcp:
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
     version: 1.1.5-rc8
+
+copy:
+  - from: https://xxx/xxxxsdfsdfsd.com/sdfsdfsdf/ccccc.txt
+    toFile: ccccc.txt
+  - from: scripts/*.bash
+    toDir: scripts
+  - from: configs/*.yaml
+    toDir: configs
 
 infraIasc:
   - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml, iasc-its-gce-rke.yaml]
@@ -70,32 +80,38 @@ infraIasc:
             Assert.AreEqual("helm-terraform-gcp", nrmIasc.ChartId);
             Assert.AreEqual("1.1.5-rc8", nrmIasc.Version);
             Assert.AreEqual("default-3", nrmIasc.Alias);
-            Assert.AreEqual("https://its-software-services-devops.github.io/helm-terraform-gcp/", nrmIasc.ChartUrl);    
+            Assert.AreEqual("https://its-software-services-devops.github.io/helm-terraform-gcp/", nrmIasc.ChartUrl);
+
+            Assert.AreEqual("ccccc.txt", m.Copy[0].ToFile);
+            Assert.AreEqual("configs", m.Copy[2].ToDir);          
         }
 
         [Test]
         public void YamlTransformTest()
         {
-          var wf = new WorkflowGeneric();            
-          var result = wf.Load(yaml1);
+            var cp = new Mock<ICopier>();
 
-          UtilsHelm.SetCmd("echo");
-          wf.Transform();
-          UtilsHelm.ResetHelmCmd();
+            var wf = new WorkflowGeneric();
+            var result = wf.Load(yaml1);
+
+            UtilsHelm.SetCmd("echo");
+            wf.SetCopier(cp.Object);
+            wf.Transform();
+            UtilsHelm.ResetHelmCmd();
         }
 
         [Test]
         public void YamlLoadFileTest()
         {
-          var path = "dummy.yaml";
-          File.WriteAllText(path, yaml1);
+            var path = "dummy.yaml";
+            File.WriteAllText(path, yaml1);
 
-          var wf = new WorkflowGeneric();    
-          var result = wf.LoadFile(path);
+            var wf = new WorkflowGeneric();    
+            var result = wf.LoadFile(path);
 
-          UtilsHelm.SetCmd("echo");
-          wf.Transform();
-          UtilsHelm.ResetHelmCmd();
+            UtilsHelm.SetCmd("echo");
+            wf.Transform();
+            UtilsHelm.ResetHelmCmd();
         }
     }
 }

@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using Its.Iasc.Workflows.Utils;
 using Its.Iasc.Workflows.Models;
 using Its.Iasc.Transformers;
+using Its.Iasc.Copier;
 
 namespace Its.Iasc.Workflows
 {
     public abstract class WorkflowBase : IWorkflow
     {
         private Manifest manifest = null;
+        private ICopier copier = new GenericCopier();
+
         private readonly Context ctx = new Context();
         
         protected abstract Manifest ParseManifest(string manifestContent);
@@ -37,6 +40,8 @@ namespace Its.Iasc.Workflows
         public int Transform()
         {
             UtilsHelm.SetSourceDir(ctx.SourceDir);
+
+            copier.Process(manifest.Copy);
             
             ITransformer xform = new DefaultTransformer(ctx);
             foreach (var iasc in manifest.InfraIasc)
@@ -47,7 +52,7 @@ namespace Its.Iasc.Workflows
                 var items = new List<string>();
                 items.Add(output);
 
-                //This can be replace with factory pattern                
+                //This can be replace by factory pattern                
                 if (string.IsNullOrEmpty(iasc.Transformer))
                 {
                     xform = new DefaultTransformer(ctx);
@@ -67,6 +72,11 @@ namespace Its.Iasc.Workflows
         public Manifest GetManifest()
         {
             return manifest;
+        }
+
+        public void SetCopier(ICopier cp)
+        {
+            copier = cp;
         }
     }
 }
