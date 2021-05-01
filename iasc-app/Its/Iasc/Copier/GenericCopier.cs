@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Its.Iasc.Workflows.Models;
@@ -53,17 +54,23 @@ namespace Its.Iasc.Copier
 
         private string GetDestDir(CopyItem ci)
         {
+            string path = "";
+            string dir = "";
+
             if (!string.IsNullOrEmpty(ci.ToDir))
             {
-                return ci.ToDir;
+                path = ci.ToDir;
+                dir = ci.ToDir;
             }
-
-            if (!string.IsNullOrEmpty(ci.ToFile))
+            else if (!string.IsNullOrEmpty(ci.ToFile))
             {
-                return ci.ToFile;
+                path = ci.ToFile;
+                dir = Path.GetDirectoryName(path);
             }
 
-            return "";
+            Utils.Exec("mkdir", String.Format("-p {0}/{1}", wipDir, dir));   
+
+            return String.Format("{0}/{1}", wipDir, path);
         }
 
         public void Process(CopyItem[] copyItems)
@@ -79,11 +86,11 @@ namespace Its.Iasc.Copier
                 }
 
                 string dstDir = GetDestDir(ci);
-                string dstPath = String.Format("{0}/{1}", wipDir, dstDir);
+                string dstPath = dstDir;
 
                 if (ct.Equals(CopyType.Http))
                 {
-                    dstPath = String.Format("-o {0}/{1}", wipDir, dstDir);
+                    dstPath = String.Format("-o {0}", dstDir);
                 }
 
                 string argv = String.Format("{0} {1} {2}", args, srcPath, dstPath);
