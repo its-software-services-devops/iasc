@@ -41,6 +41,8 @@ namespace Its.Iasc.Workflows
         {
             UtilsHelm.SetSourceDir(ctx.SourceDir);
 
+            copier.SetSrcDir(ctx.SourceDir);
+            copier.SetWipDir(ctx.WipDir);
             copier.Process(manifest.Copy);
             
             ITransformer xform = new DefaultTransformer(ctx);
