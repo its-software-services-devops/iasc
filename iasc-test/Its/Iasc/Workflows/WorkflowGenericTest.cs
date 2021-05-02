@@ -89,13 +89,17 @@ infraIasc:
         [Test]
         public void YamlTransformTest()
         {
-            var cp = new Mock<ICopier>();
+            //var cp = new Mock<ICopier>();
+            var cp = new GenericCopier();
+            cp.SetCopyCmd(CopyType.GsUtilCp, "echo");
+            cp.SetCopyCmd(CopyType.Cp, "echo");
+            cp.SetCopyCmd(CopyType.Http, "echo");
 
             var wf = new WorkflowGeneric();
             var result = wf.Load(yaml1);
 
             UtilsHelm.SetCmd("echo");
-            wf.SetCopier(cp.Object);
+            wf.SetCopier(cp);
             wf.Transform();
             UtilsHelm.ResetHelmCmd();
         }
