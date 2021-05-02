@@ -6,7 +6,7 @@ namespace Its.Iasc.Workflows.Models
     {
         public GlobalConfig Config { get; set; } 
         public Dictionary<string, HelmChart> Charts { get; set; }
-        
+        public CopyItem[] Copy { get; set; }
         public Infra[] InfraIasc { get; set; }
     } 
 }
