@@ -39,7 +39,7 @@ namespace Its.Iasc.Workflows
 
         public int Transform()
         {
-            Utils.Utils.SetVarsMap(manifest.Vars);
+            Utils.Utils.SetManifest(manifest);
             UtilsHelm.SetSourceDir(ctx.SourceDir);
 
             copier.SetSrcDir(ctx.SourceDir);
@@ -59,12 +59,10 @@ namespace Its.Iasc.Workflows
                 if (string.IsNullOrEmpty(iasc.Transformer))
                 {
                     xform = new DefaultTransformer(ctx);
-                    xform.SetManifest(manifest);
                 }
                 else if (iasc.Transformer.Equals("yaml2tf"))
                 {
                     xform = new Yaml2Terraform(ctx);
-                    xform.SetManifest(manifest);
                 } 
                 xform.Transform(items, iasc);
 

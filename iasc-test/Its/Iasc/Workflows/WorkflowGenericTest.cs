@@ -12,6 +12,10 @@ namespace Its.Iasc.Workflows
 config:
   defaultChartId: helm-terraform-gcp
 
+vars:
+  eckFile: all-in-one.yaml
+  eckVersion: 1.5.0
+
 charts:
   helm-terraform-gcp:
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/

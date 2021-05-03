@@ -6,6 +6,5 @@ namespace Its.Iasc.Transformers
     public interface ITransformer
     {
         IList<string> Transform(IList<string> items, Infra cfg);
-        void SetManifest(Manifest mnf);
     }
 }

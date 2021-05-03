@@ -3,6 +3,7 @@ config:
 
 vars:
   eckFile: all-in-one.yaml
+  eckVersion: 1.5.0
 
 charts:
   helm-terraform-gcp:
@@ -14,7 +15,7 @@ charts:
     version: 4.0.3
 
 copy:
-  - from: https://download.elastic.co/downloads/eck/1.5.0/${VAR.eckFile}
+  - from: https://download.elastic.co/downloads/eck/${VAR.eckVersion}/${VAR.eckFile}
     toFile: all-in-one-new.yaml
 
   - from: scripts/*.bash
