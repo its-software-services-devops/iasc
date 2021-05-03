@@ -58,6 +58,7 @@ namespace Its.Iasc.Workflows.Utils
             }
             else
             {
+                actualValue = defaultValue;
                 //Secret things
                 displayValue = "***";
             }

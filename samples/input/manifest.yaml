@@ -4,6 +4,7 @@ config:
 vars:
   eckFile: all-in-one.yaml
   eckVersion: 1.5.0
+  replicaCount: 2
 
 charts:
   helm-terraform-gcp:
@@ -33,4 +34,4 @@ infraIasc:
     alias: dashboard
     chartId: kubernetes-dashboard
     values:
-    - --set-string replicaCount=1
+    - --set-string replicaCount=${VAR.replicaCount}
