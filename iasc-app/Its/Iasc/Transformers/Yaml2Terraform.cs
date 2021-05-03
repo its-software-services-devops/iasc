@@ -6,13 +6,10 @@ using Its.Iasc.Workflows.Models;
 
 namespace Its.Iasc.Transformers
 {
-    public class Yaml2Terraform : ITransformer
+    public class Yaml2Terraform : BaseTransformer
     {
-        private readonly Context context = null;
-
-        public Yaml2Terraform(Context ctx)
+        public Yaml2Terraform(Context ctx) : base(ctx)
         {
-            context = ctx;
         }
 
         protected void ProcessLines(List<string> lines, Infra cfg)
@@ -30,7 +27,7 @@ namespace Its.Iasc.Transformers
                     //Skipping the ---
                     if (!string.IsNullOrEmpty(currentFname))
                     {
-                        UtilsTransformer.WriteFileContent(context, currentFname, contents);
+                        UtilsTransformer.WriteFileContent(GetContext(), currentFname, contents);
                         contents.Clear();
                     }
                 }
@@ -49,11 +46,11 @@ namespace Its.Iasc.Transformers
 
             if (contents.Count > 0)
             {
-                UtilsTransformer.WriteFileContent(context, currentFname, contents);
+                UtilsTransformer.WriteFileContent(GetContext(), currentFname, contents);
             }
         }
 
-        public IList<string> Transform(IList<string> items, Infra cfg)
+        public override IList<string> Transform(IList<string> items, Infra cfg)
         {
             var lines = UtilsTransformer.MultiLinesToArray(items);
             ProcessLines(lines, cfg);

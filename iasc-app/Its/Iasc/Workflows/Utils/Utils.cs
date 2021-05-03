@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Serilog;
 using System.Diagnostics;
 
@@ -5,6 +6,13 @@ namespace Its.Iasc.Workflows.Utils
 {
     public static class Utils
     {
+        private static Dictionary<string, string> vars = null;
+
+        public static void SetVarsMap(Dictionary<string, string> map)
+        {
+            vars = map;
+        }
+
         public static string Exec(string cmd, string argv)
         {
             string output = "";
