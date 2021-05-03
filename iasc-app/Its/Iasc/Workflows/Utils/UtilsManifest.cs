@@ -18,6 +18,10 @@ namespace Its.Iasc.Workflows.Utils
                 {
                     iasc.ChartId = defaultChart;
                 }
+                else
+                {
+                    chart = manifest.Charts[iasc.ChartId];
+                }
 
                 if (iasc.ChartUrl == null)
                 {

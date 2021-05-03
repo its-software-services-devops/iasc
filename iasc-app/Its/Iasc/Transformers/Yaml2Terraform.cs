@@ -1,10 +1,8 @@
 using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Its.Iasc.Workflows;
 using Its.Iasc.Workflows.Models;
-using Serilog;
 
 namespace Its.Iasc.Transformers
 {
@@ -15,32 +13,6 @@ namespace Its.Iasc.Transformers
         public Yaml2Terraform(Context ctx)
         {
             context = ctx;
-        }
-
-        private void WriteFileContent(string fname, List<string> lines)
-        {
-            if (string.IsNullOrEmpty(fname))
-            {
-                return;
-            }
-            
-            string path = fname;
-            if (!context.WipDir.Equals(""))
-            {
-                path = String.Format("{0}/{1}", context.WipDir, fname);
-            }
-            
-            int cnt = lines.Count;
-
-            using (FileStream fs = File.Open(path, FileMode.Create))
-            {
-                StreamWriter sw = new StreamWriter(fs);
-                lines.ForEach(r=>sw.WriteLine(r));
-
-                sw.Flush();
-            }
-
-            Log.Information("Wrote {0} line(s) to file [{1}]", cnt, path);
         }
 
         protected void ProcessLines(List<string> lines, Infra cfg)
@@ -58,7 +30,7 @@ namespace Its.Iasc.Transformers
                     //Skipping the ---
                     if (!string.IsNullOrEmpty(currentFname))
                     {
-                        WriteFileContent(currentFname, contents);
+                        UtilsTransformer.WriteFileContent(context, currentFname, contents);
                         contents.Clear();
                     }
                 }
@@ -77,21 +49,13 @@ namespace Its.Iasc.Transformers
 
             if (contents.Count > 0)
             {
-                WriteFileContent(currentFname, contents);
+                UtilsTransformer.WriteFileContent(context, currentFname, contents);
             }
         }
 
         public IList<string> Transform(IList<string> items, Infra cfg)
         {
-            var lines = new List<string>();
-
-            char[] delims = new[] { '\r', '\n' };
-            foreach (string item in items)
-            {
-                string[] tokens = item.Split(delims, StringSplitOptions.RemoveEmptyEntries);
-                lines.AddRange(tokens);
-            }
-
+            var lines = UtilsTransformer.MultiLinesToArray(items);
             ProcessLines(lines, cfg);
 
             return lines;
