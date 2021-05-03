@@ -26,6 +26,45 @@ namespace Its.Iasc.Workflows.Utils
             return tmp;
         }
 
+        private static (string actValue, string dispValue) GetVariableValue(string variable, string bucket, string key, string defaultValue)
+        {
+            string actualValue = "";
+            string displayValue = "";
+
+            if (bucket.Equals("VAR"))
+            {
+                if (manifest.Vars.ContainsKey(key))
+                {
+                    actualValue = manifest.Vars[key];
+                }
+                else
+                {
+                    Log.Warning("Variable [{0}] not found, so use default value [{1}] instead", variable, defaultValue);
+                    actualValue = defaultValue;
+                }
+
+                displayValue = actualValue;
+            }
+            else if (bucket.Equals("ENV"))
+            {
+                actualValue = Environment.GetEnvironmentVariable(key);
+                if (actualValue == null)
+                {
+                    Log.Warning("Env variable [{0}] not found, so use default value [{1}] instead", variable, defaultValue);
+                    actualValue = defaultValue;
+                }
+
+                displayValue = actualValue;
+            }
+            else
+            {
+                //Secret things
+                displayValue = "***";
+            }
+
+            return (actualValue, displayValue);     
+        }
+
         public static (string execStr, string dispStr) GetInterpolateStrings(string argv, string keyword)
         {
             Dictionary<string, string> maps = new Dictionary<string, string>();
@@ -67,36 +106,7 @@ namespace Its.Iasc.Workflows.Utils
                     key = m.Groups[2].Value;                 
                 }
 
-                if (bucket.Equals("VAR"))
-                {
-                    if (manifest.Vars.ContainsKey(key))
-                    {
-                        actualValue = manifest.Vars[key];
-                    }
-                    else
-                    {
-                        Log.Warning("Variable [{0}] not found, so use default value [{1}] instead", variable, defaultValue);
-                        actualValue = defaultValue;
-                    }
-
-                    displayValue = actualValue;
-                }
-                else if (bucket.Equals("ENV"))
-                {
-                    actualValue = Environment.GetEnvironmentVariable(key);
-                    if (actualValue == null)
-                    {
-                        Log.Warning("Env variable [{0}] not found, so use default value [{1}] instead", variable, defaultValue);
-                        actualValue = defaultValue;
-                    }
-
-                    displayValue = actualValue;
-                }
-                else
-                {
-                    //Secret things
-                    displayValue = "***";
-                }
+                (actualValue, displayValue) = GetVariableValue(variable, bucket, key, defaultValue);
 
                 maps[variable] = actualValue;
                 displayMap[variable] = displayValue;

@@ -1,4 +1,3 @@
-using Moq;
 using System.IO;
 using NUnit.Framework;
 using Its.Iasc.Workflows.Utils;
