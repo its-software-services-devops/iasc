@@ -150,6 +150,7 @@ infraIasc:
             var wf = new WorkflowGeneric();
             wf.GetContext().SourceDir = ".";
             wf.GetContext().WipDir = ".";
+            wf.GetContext().VcsMode = "git";
             wf.SetCloner(cn);
 
             wf.CloneFiles();

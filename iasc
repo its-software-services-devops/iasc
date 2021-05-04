@@ -3,20 +3,25 @@
 dotnet build
 #dotnet run --project iasc-app $*
 
-SUBSYSTEM=rke
+export IASC_VCS_MODE=git #local
+
+SRC_DIR=samples/input-gce
+if [[ ${IASC_VCS_MODE} == "git" ]]
+then
+  SRC_DIR=samples/wip/input
+  mkdir -p ${SRC_DIR}
+  rm -rf ${SRC_DIR}/*  
+fi
 
 WIP_DIR=samples/wip/output
-SRC_DIR=samples/wip/input
 TMP_DIR=samples/wip/temp
 
-mkdir -p ${SRC_DIR}
-rm -rf ${SRC_DIR}/* ${WIP_DIR}/* ${TMP_DIR}/*
+rm -rf ${WIP_DIR}/* ${TMP_DIR}/*
 
 export IASC_SRC_DIR=${SRC_DIR}
 export IASC_WIP_DIR=${WIP_DIR}
 export IASC_TMP_DIR=${TMP_DIR}
 
-export IASC_VCS_MODE=git
 export IASC_VCS_URL=https://github.com/its-software-services-devops/infra-devops.git
 export IASC_VCS_REF=develop
 export IASC_VCS_FOLDER=gce-rke-manager
