@@ -5,14 +5,16 @@ dotnet build
 
 SUBSYSTEM=rke
 
-WIP_DIR=/tmp/iasc-wip
-SRC_DIR=/tmp/iasc-input
+WIP_DIR=samples/wip/output
+SRC_DIR=samples/wip/input
+TMP_DIR=samples/wip/temp
 
 mkdir -p ${SRC_DIR}
-rm -rf ${SRC_DIR}/* ${WIP_DIR}/*
+rm -rf ${SRC_DIR}/* ${WIP_DIR}/* ${TMP_DIR}/*
 
-export IASC_SRC_DIR=${SRC_DIR} #samples/input-${SUBSYSTEM}
-export IASC_WIP_DIR=${WIP_DIR} #samples/wip/${SUBSYSTEM}
+export IASC_SRC_DIR=${SRC_DIR}
+export IASC_WIP_DIR=${WIP_DIR}
+export IASC_TMP_DIR=${TMP_DIR}
 
 export IASC_VCS_MODE=git
 export IASC_VCS_URL=https://github.com/its-software-services-devops/infra-devops.git

@@ -137,5 +137,22 @@ infraIasc:
             wf.Transform();
             UtilsHelm.ResetHelmCmd();
         }
+
+        [Test]
+        public void CloneFileTest()
+        {
+            //To make code coverate 100%
+
+            var cn = new GitCloner();
+            cn.SetGitCmd("echo");
+            cn.SetCopyCmd("echo");
+
+            var wf = new WorkflowGeneric();
+            wf.GetContext().SourceDir = ".";
+            wf.GetContext().WipDir = ".";
+            wf.SetCloner(cn);
+
+            wf.CloneFiles();
+        }        
     }
 }

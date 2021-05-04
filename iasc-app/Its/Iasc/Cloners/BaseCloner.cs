@@ -8,7 +8,7 @@ namespace Its.Iasc.Cloners
         
         public abstract void Clone();
 
-        public BaseCloner()
+        protected BaseCloner()
         {
         }
 
