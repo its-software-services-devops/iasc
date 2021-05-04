@@ -37,14 +37,26 @@ namespace Its.Iasc.Workflows
             return ctx;
         }
 
+        private void SetupCopier()
+        {
+            copier.SetSrcDir(ctx.SourceDir);
+            copier.SetWipDir(ctx.WipDir);
+
+            var gsutilPath = Environment.GetEnvironmentVariable("IASC_GSTUIL_PATH");
+            if (gsutilPath != null)
+            {
+                copier.SetCopyCmd(CopyType.GsUtilCp, gsutilPath);
+            }
+
+            copier.Process(manifest.Copy);
+        }
+
         public int Transform()
         {
             Utils.Utils.SetManifest(manifest);
             UtilsHelm.SetSourceDir(ctx.SourceDir);
 
-            copier.SetSrcDir(ctx.SourceDir);
-            copier.SetWipDir(ctx.WipDir);
-            copier.Process(manifest.Copy);
+            SetupCopier();
             
             ITransformer xform = new DefaultTransformer(ctx);
             foreach (var iasc in manifest.InfraIasc)

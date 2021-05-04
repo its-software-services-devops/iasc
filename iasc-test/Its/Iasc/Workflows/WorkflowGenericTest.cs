@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using NUnit.Framework;
 using Its.Iasc.Workflows.Utils;
@@ -92,8 +93,9 @@ infraIasc:
         [Test]
         public void YamlTransformTest()
         {
-            //var cp = new Mock<ICopier>();
-            var cp = new GenericCopier();
+            Environment.SetEnvironmentVariable("IASC_GSTUIL_PATH", "echo");
+
+            var cp = new GenericCopier();            
             cp.SetCopyCmd(CopyType.GsUtilCp, "echo");
             cp.SetCopyCmd(CopyType.Cp, "echo");
             cp.SetCopyCmd(CopyType.Http, "echo");

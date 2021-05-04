@@ -1,0 +1,16 @@
+config:
+  project: "its-artifact-commons"
+  stateBucket: "its-terraform-states"
+  bucketPrefix: "its-demo-gce-rke"
+
+providers:
+  google: 
+    source: "hashicorp/google"
+    version: "~> 3.4.0"
+    project: "its-artifact-commons"
+    region: "asia-southeast1"
+
+  rke:
+    source: "rancher/rke"
+    version: "1.1.7"
+    logFile: "rke-cluster.log"
