@@ -1,0 +1,21 @@
+config:
+  defaultChartId: helm-terraform-gcp
+
+vars: {}
+
+charts:
+  helm-terraform-gcp:
+    chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
+    version: 1.1.5-rc8
+
+copy:
+  - from: scripts/*.bash
+    toDir: scripts
+
+  - from: gs://its-config-params/gcp-rke-demo-cluster/id_rsa*
+    toDir: ""
+    
+infraIasc:
+  - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml]
+    transformer: yaml2tf
+    alias: gcp

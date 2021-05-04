@@ -10,9 +10,7 @@ namespace Its.Iasc.Actions
             Log.Information("Action = [Init] Verbose = [{0}]", options.Verbosity); 
 
             var wf = GetWorkflow();
-            wf.GetContext().SourceDir = "samples/input";
-            wf.GetContext().WipDir = "samples/wip";
-
+            wf.CloneFiles();
             wf.LoadFile("manifest.yaml");
             wf.Transform();
 

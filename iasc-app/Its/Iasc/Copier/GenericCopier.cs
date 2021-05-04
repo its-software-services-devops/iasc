@@ -12,7 +12,7 @@ namespace Its.Iasc.Copier
         private readonly Dictionary<CopyType, string> copyCmds = new Dictionary<CopyType, string>() 
         { 
             { CopyType.Cp, "cp" },
-            { CopyType.GsUtilCp, "gsutil" },
+            { CopyType.GsUtilCp, "gstuil" },
             { CopyType.Http, "curl" }
         };
 

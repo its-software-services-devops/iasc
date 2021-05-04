@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using Its.Iasc.Workflows;
 using Its.Iasc.Workflows.Models;
 
-
 namespace Its.Iasc.Transformers
 {
-    public class DefaultTransformer : ITransformer
+    public class DefaultTransformer : BaseTransformer
     {
-        private readonly Context context = null;
-
-        public DefaultTransformer(Context ctx)
+        public DefaultTransformer(Context ctx) : base(ctx)
         {
-            context = ctx;
         }
 
-        public IList<string> Transform(IList<string> items, Infra cfg)
+        public override IList<string> Transform(IList<string> items, Infra cfg)
         {
             var lines = UtilsTransformer.MultiLinesToArray(items);
-            UtilsTransformer.WriteFileContent(context, String.Format("{0}.yaml", cfg.Alias), lines);
+            UtilsTransformer.WriteFileContent(GetContext(), String.Format("{0}.yaml", cfg.Alias), lines);
 
             return lines;
         }

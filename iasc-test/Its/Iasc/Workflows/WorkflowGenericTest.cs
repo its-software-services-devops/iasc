@@ -1,8 +1,9 @@
-using Moq;
+using System;
 using System.IO;
 using NUnit.Framework;
 using Its.Iasc.Workflows.Utils;
 using Its.Iasc.Copier;
+using Its.Iasc.Cloners;
 
 namespace Its.Iasc.Workflows
 {
@@ -11,6 +12,10 @@ namespace Its.Iasc.Workflows
         private string yaml1 = @"
 config:
   defaultChartId: helm-terraform-gcp
+
+vars:
+  eckFile: all-in-one.yaml
+  eckVersion: 1.5.0
 
 charts:
   helm-terraform-gcp:
@@ -89,17 +94,25 @@ infraIasc:
         [Test]
         public void YamlTransformTest()
         {
-            //var cp = new Mock<ICopier>();
-            var cp = new GenericCopier();
+            Environment.SetEnvironmentVariable("IASC_GSTUIL_PATH", "echo");
+            
+            var cp = new GenericCopier();            
             cp.SetCopyCmd(CopyType.GsUtilCp, "echo");
             cp.SetCopyCmd(CopyType.Cp, "echo");
             cp.SetCopyCmd(CopyType.Http, "echo");
 
+            var cn = new GitCloner();
+            cn.SetGitCmd("echo");
+            cn.SetCopyCmd("echo");
+
             var wf = new WorkflowGeneric();
+            wf.GetContext().SourceDir = ".";
+            wf.GetContext().WipDir = ".";
             var result = wf.Load(yaml1);
 
             UtilsHelm.SetCmd("echo");
             wf.SetCopier(cp);
+            wf.SetCloner(cn);
             wf.Transform();
             UtilsHelm.ResetHelmCmd();
         }
@@ -110,12 +123,36 @@ infraIasc:
             var path = "dummy.yaml";
             File.WriteAllText(path, yaml1);
 
-            var wf = new WorkflowGeneric();    
+            var cn = new GitCloner();
+            cn.SetGitCmd("echo");
+            cn.SetCopyCmd("echo");
+
+            var wf = new WorkflowGeneric();
+            wf.GetContext().SourceDir = ".";
+            wf.GetContext().WipDir = ".";
+            wf.SetCloner(cn);
             var result = wf.LoadFile(path);
 
             UtilsHelm.SetCmd("echo");
             wf.Transform();
             UtilsHelm.ResetHelmCmd();
         }
+
+        [Test]
+        public void CloneFileTest()
+        {
+            //To make code coverate 100%
+
+            var cn = new GitCloner();
+            cn.SetGitCmd("echo");
+            cn.SetCopyCmd("echo");
+
+            var wf = new WorkflowGeneric();
+            wf.GetContext().SourceDir = ".";
+            wf.GetContext().WipDir = ".";
+            wf.SetCloner(cn);
+
+            wf.CloneFiles();
+        }        
     }
 }

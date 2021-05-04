@@ -2,7 +2,7 @@ gceRke:
   groupName: "its-rancher-sandbox"
   network: "default"
   region: "asia-southeast1"
-  clusterYaml: cluster.yaml
+  clusterYaml: configs/cluster.yaml
 
   rke:
     cluster_name: "its-rancher-demo"
@@ -26,6 +26,13 @@ gceRke:
       zone: "asia-southeast1-b"
       mode: "register"
       role: '["worker"]'
+
+    - host: "its-rancher-worker-02"
+      profile: "worker"
+      zone: "asia-southeast1-b"
+      mode: "register"
+      role: '["worker"]'
+
   profiles:
     master:
       terraformVmModule: "git::https://github.com/its-software-services-devops/tf-module-gcp-vm.git//modules?ref=1.0.9"
@@ -43,7 +50,7 @@ gceRke:
       externalDisks: []
       serviceAccount: "devops-cicd@its-artifact-commons.iam.gserviceaccount.com"
       enableNatIP: true
-      remoteExecByNatIP: true
+      remoteExecByNatIP: false
 
     worker:
       terraformVmModule: "git::https://github.com/its-software-services-devops/tf-module-gcp-vm.git//modules?ref=1.0.9"
@@ -61,4 +68,4 @@ gceRke:
       externalDisks: []
       serviceAccount: "devops-cicd@its-artifact-commons.iam.gserviceaccount.com"
       enableNatIP: true
-      remoteExecByNatIP: true
+      remoteExecByNatIP: false

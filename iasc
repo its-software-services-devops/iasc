@@ -2,4 +2,23 @@
 
 dotnet build
 #dotnet run --project iasc-app $*
-dotnet /d/dev/projects/workspace-its/iasc/iasc-app/bin/Debug/net5.0/iasc-app.dll $*
+
+SUBSYSTEM=rke
+
+WIP_DIR=samples/wip/output
+SRC_DIR=samples/wip/input
+TMP_DIR=samples/wip/temp
+
+mkdir -p ${SRC_DIR}
+rm -rf ${SRC_DIR}/* ${WIP_DIR}/* ${TMP_DIR}/*
+
+export IASC_SRC_DIR=${SRC_DIR}
+export IASC_WIP_DIR=${WIP_DIR}
+export IASC_TMP_DIR=${TMP_DIR}
+
+export IASC_VCS_MODE=git
+export IASC_VCS_URL=https://github.com/its-software-services-devops/infra-devops.git
+export IASC_VCS_REF=develop
+export IASC_VCS_FOLDER=gce-rke-manager
+
+dotnet iasc-app/bin/Debug/net5.0/iasc-app.dll $*
