@@ -5,6 +5,7 @@ using Its.Iasc.Workflows.Utils;
 using Its.Iasc.Workflows.Models;
 using Its.Iasc.Transformers;
 using Its.Iasc.Copier;
+using Its.Iasc.Cloners;
 
 namespace Its.Iasc.Workflows
 {
@@ -14,7 +15,8 @@ namespace Its.Iasc.Workflows
         private ICopier copier = new GenericCopier();
 
         private readonly Context ctx = new Context();
-        
+        private ICloner cloner = new GitCloner();
+
         protected abstract Manifest ParseManifest(string manifestContent);
 
         public int Load(string manifestContent)
@@ -49,6 +51,12 @@ namespace Its.Iasc.Workflows
             }
 
             copier.Process(manifest.Copy);
+        }
+
+        public void CloneFiles()
+        {
+            cloner.SetContext(ctx);
+            cloner.Clone();
         }
 
         public int Transform()
@@ -93,5 +101,10 @@ namespace Its.Iasc.Workflows
         {
             copier = cp;
         }
+
+        public void SetCloner(ICloner cl)
+        {
+            cloner = cl;
+        }        
     }
 }

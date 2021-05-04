@@ -3,6 +3,7 @@ using System.IO;
 using NUnit.Framework;
 using Its.Iasc.Workflows.Utils;
 using Its.Iasc.Copier;
+using Its.Iasc.Cloners;
 
 namespace Its.Iasc.Workflows
 {
@@ -94,17 +95,24 @@ infraIasc:
         public void YamlTransformTest()
         {
             Environment.SetEnvironmentVariable("IASC_GSTUIL_PATH", "echo");
-
+            
             var cp = new GenericCopier();            
             cp.SetCopyCmd(CopyType.GsUtilCp, "echo");
             cp.SetCopyCmd(CopyType.Cp, "echo");
             cp.SetCopyCmd(CopyType.Http, "echo");
 
+            var cn = new GitCloner();
+            cn.SetGitCmd("echo");
+            cn.SetCopyCmd("echo");
+
             var wf = new WorkflowGeneric();
+            wf.GetContext().SourceDir = ".";
+            wf.GetContext().WipDir = ".";
             var result = wf.Load(yaml1);
 
             UtilsHelm.SetCmd("echo");
             wf.SetCopier(cp);
+            wf.SetCloner(cn);
             wf.Transform();
             UtilsHelm.ResetHelmCmd();
         }
@@ -115,7 +123,14 @@ infraIasc:
             var path = "dummy.yaml";
             File.WriteAllText(path, yaml1);
 
-            var wf = new WorkflowGeneric();    
+            var cn = new GitCloner();
+            cn.SetGitCmd("echo");
+            cn.SetCopyCmd("echo");
+
+            var wf = new WorkflowGeneric();
+            wf.GetContext().SourceDir = ".";
+            wf.GetContext().WipDir = ".";
+            wf.SetCloner(cn);
             var result = wf.LoadFile(path);
 
             UtilsHelm.SetCmd("echo");
