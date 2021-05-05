@@ -171,19 +171,20 @@ namespace Its.Iasc.Workflows.Utils
 
             string[] fileList = Directory.GetFiles(sourceDir, fileName);
 
+            bool isDir = Directory.Exists(dstExecStr);
             foreach (string f in fileList)
-            {
-                bool isDir = Directory.Exists(dstExecStr);
+            {           
+                var dstPath = dstExecStr;
 
                 if (isDir)
                 {
                     string fname = Path.GetFileName(f);
-                    dstExecStr = Path.Combine(dstExecStr, fname);
+                    dstPath = Path.Combine(dstExecStr, fname);
                 }
 
-                File.Copy(f, dstExecStr, true);
-                Log.Information("Copied file [{0}] to [{1}]", f, dstDispStr);
-            }            
+                File.Copy(f, dstPath, true);
+                Log.Information("Copied file [{0}] to [{1}]", f, dstPath);
+            }
         }
 
         public static string Exec(string cmd, string argv)
