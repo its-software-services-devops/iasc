@@ -42,7 +42,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
  apt-get install google-cloud-sdk -y
 
 RUN gcloud version
-RUN gsutil version
+RUN gsutil version && which gsutil
 RUN git --version
 
 COPY --from=build /usr/local/bin/terraform /usr/local/bin/
