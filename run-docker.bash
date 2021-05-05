@@ -1,6 +1,6 @@
 #/bin/bash
 
-VERSION=develop-a2f9851 
+VERSION=develop-f1db0ed 
 
 sudo docker run \
 -v $(pwd)/samples/wip/output:/wip/output \
