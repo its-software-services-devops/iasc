@@ -36,7 +36,8 @@ namespace Its.Iasc.Cloners
 
             if (inTemp)
             {
-                Utils.CopyDirectory(destDir, context.SourceDir);
+                destDir = String.Format("{0}/{1}", destDir, context.VcsFolder);
+                Utils.CopyDirectory(destDir, context.SourceDir, 0);
             }
         }
 

@@ -120,7 +120,7 @@ namespace Its.Iasc.Workflows.Utils
             return (execStr, displayStr);
         }
 
-        public static void CopyDirectory(string sourceDirName, string destDirName)
+        public static void CopyDirectory(string sourceDirName, string destDirName, int level)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
@@ -157,7 +157,7 @@ namespace Its.Iasc.Workflows.Utils
             foreach (DirectoryInfo subdir in dirs)
             {
                 string temppath = Path.Combine(destDirName, subdir.Name);
-                CopyDirectory(subdir.FullName, temppath);
+                CopyDirectory(subdir.FullName, temppath, level++);
             }
         }
         
