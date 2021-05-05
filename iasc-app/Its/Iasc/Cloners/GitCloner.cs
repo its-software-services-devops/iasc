@@ -7,7 +7,6 @@ namespace Its.Iasc.Cloners
     public class GitCloner : BaseCloner
     {
         private string gitCmd = "git";
-        private string copyCmd = "cp";
         private readonly string cloneArgs = "clone -b {0} --single-branch {1} {2}";
 
         public GitCloner()
@@ -37,8 +36,7 @@ namespace Its.Iasc.Cloners
 
             if (inTemp)
             {
-                string copyArgs = String.Format("-r {0}/{1}/* {2}", destDir, context.VcsFolder, context.SourceDir);
-                Utils.Exec(copyCmd, copyArgs);
+                Utils.CopyDirectory(destDir, context.SourceDir);
             }
         }
 
@@ -46,10 +44,5 @@ namespace Its.Iasc.Cloners
         {
             gitCmd = cmd;
         }
-
-        public void SetCopyCmd(string cmd)
-        {
-            copyCmd = cmd;
-        }        
     }
 }

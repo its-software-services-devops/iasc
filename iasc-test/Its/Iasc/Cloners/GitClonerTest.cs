@@ -21,7 +21,6 @@ namespace Its.Iasc.Cloners
             ctx.VcsFolder = folder;
 
             var cn = new GitCloner();
-            cn.SetCopyCmd("echo");
             cn.SetGitCmd("echo");
             cn.SetContext(ctx);
 

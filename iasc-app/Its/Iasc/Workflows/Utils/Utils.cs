@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -117,6 +118,72 @@ namespace Its.Iasc.Workflows.Utils
             string displayStr = ReplaceString(argv, displayMap);
 
             return (execStr, displayStr);
+        }
+
+        public static void CopyDirectory(string sourceDirName, string destDirName)
+        {
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                Log.Error("Directory [{0}] not found!!!", sourceDirName);
+                return;            
+            }
+
+            string name = Path.GetFileName(sourceDirName);
+            if (name.StartsWith('.'))
+            {
+                Log.Information("Skip hidden directory [{0}]", name);
+                return;
+            }
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, true);
+
+                Log.Information("Copied file [{0}] to [{1}]", file.Name, destDirName);
+            }
+
+            foreach (DirectoryInfo subdir in dirs)
+            {
+                string temppath = Path.Combine(destDirName, subdir.Name);
+                CopyDirectory(subdir.FullName, temppath);
+            }
+        }
+        
+        public static void CopyFile(string src, string dst)
+        {
+            (string srcExecStr, string srcDispStr) = GetInterpolateStrings(src, "VAR|ENV");
+            (string dstExecStr, string dstDispStr) = GetInterpolateStrings(dst, "VAR|ENV");
+
+            string sourceDir = Path.GetDirectoryName(srcExecStr);
+            string fileName = Path.GetFileName(srcExecStr);
+
+            string[] fileList = Directory.GetFiles(sourceDir, fileName);
+
+            foreach (string f in fileList)
+            {
+                bool isDir = Directory.Exists(dstExecStr);
+
+                if (isDir)
+                {
+                    string fname = Path.GetFileName(f);
+                    dstExecStr = Path.Combine(dstExecStr, fname);
+                }
+
+                File.Copy(f, dstExecStr, true);
+                Log.Information("Copied file [{0}] to [{1}]", f, dstDispStr);
+            }            
         }
 
         public static string Exec(string cmd, string argv)

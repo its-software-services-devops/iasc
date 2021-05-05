@@ -45,8 +45,15 @@ namespace Its.Iasc.Copier
 
                 string dstPath = copier.GetDestPath(ci, ct);
 
-                string argv = String.Format("{0} {1} {2}", args, srcPath, dstPath);
-                Utils.Exec(cmd, argv);
+                if (ct.Equals(CopyType.Cp))
+                {
+                    Utils.CopyFile(srcPath, dstPath);
+                }
+                else
+                {
+                    string argv = String.Format("{0} {1} {2}", args, srcPath, dstPath);
+                    Utils.Exec(cmd, argv);
+                }
             }
         }
 
