@@ -103,7 +103,6 @@ infraIasc:
 
             var cn = new GitCloner();
             cn.SetGitCmd("echo");
-            cn.SetCopyCmd("echo");
 
             var wf = new WorkflowGeneric();
             wf.GetContext().SourceDir = ".";
@@ -125,7 +124,6 @@ infraIasc:
 
             var cn = new GitCloner();
             cn.SetGitCmd("echo");
-            cn.SetCopyCmd("echo");
 
             var wf = new WorkflowGeneric();
             wf.GetContext().SourceDir = ".";
@@ -145,11 +143,11 @@ infraIasc:
 
             var cn = new GitCloner();
             cn.SetGitCmd("echo");
-            cn.SetCopyCmd("echo");
 
             var wf = new WorkflowGeneric();
             wf.GetContext().SourceDir = ".";
             wf.GetContext().WipDir = ".";
+            wf.GetContext().VcsMode = "git";
             wf.SetCloner(cn);
 
             wf.CloneFiles();

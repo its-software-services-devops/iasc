@@ -24,6 +24,7 @@ namespace Its.Iasc.Workflows
             manifest = UtilsManifest.Normalize(ParseManifest(manifestContent));
             return 0;
         }
+
         public int LoadFile(string fileName)
         {
             string inputPath = String.Format("{0}/{1}", ctx.SourceDir, fileName);
@@ -55,8 +56,11 @@ namespace Its.Iasc.Workflows
 
         public void CloneFiles()
         {
-            cloner.SetContext(ctx);
-            cloner.Clone();
+            if (ctx.VcsMode.Equals("git"))
+            {
+                cloner.SetContext(ctx);
+                cloner.Clone();
+            }
         }
 
         public int Transform()

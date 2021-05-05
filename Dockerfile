@@ -34,6 +34,7 @@ FROM mcr.microsoft.com/dotnet/runtime:5.0
 RUN apt-get -y update
 RUN apt-get -y install curl
 RUN apt-get -y install gnupg2
+RUN apt-get -y install git
 
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && \
@@ -41,7 +42,8 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
  apt-get install google-cloud-sdk -y
 
 RUN gcloud version
-RUN gsutil version
+RUN gsutil version && which gsutil
+RUN git --version
 
 COPY --from=build /usr/local/bin/terraform /usr/local/bin/
 COPY --from=build /usr/local/bin/helm /usr/local/bin/
@@ -53,5 +55,14 @@ WORKDIR /app
 COPY --from=build /app .
 RUN ls -lrt
 RUN dotnet iasc-app.dll info
+
+RUN mkdir -p /wip/input
+RUN mkdir -p /wip/output
+
+ENV IASC_SRC_DIR=/wip/input
+ENV IASC_WIP_DIR=/wip/output
+ENV IASC_TMP_DIR=/tmp
+ENV IASC_VCS_MODE=local
+ENV IASC_GSTUIL_PATH=/usr/bin/gsutil
 
 ENTRYPOINT ["dotnet", "iasc-app.dll"]
