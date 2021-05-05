@@ -56,4 +56,12 @@ COPY --from=build /app .
 RUN ls -lrt
 RUN dotnet iasc-app.dll info
 
+RUN mkdir -p /wip/input
+RUN mkdir -p /wip/output
+
+ENV IASC_SRC_DIR=/wip/input
+ENV IASC_WIP_DIR=/wip/output
+ENV IASC_TMP_DIR=/tmp
+ENV IASC_VCS_MODE=local
+
 ENTRYPOINT ["dotnet", "iasc-app.dll"]
