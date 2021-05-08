@@ -112,6 +112,6 @@ namespace Its.Iasc.Workflows
         public void ExeCmdWitheErrorTest(string cmd, string args)
         {
             Utils.Utils.Exec(cmd, args);
-        }        
+        }
     }
 }

@@ -215,6 +215,9 @@ namespace Its.Iasc.Workflows.Utils
                 output = pProcess.StandardOutput.ReadToEnd();
                 pProcess.WaitForExit();
 
+                //If want to use Environment.Exit(1), we will need DI to do the unit testing
+                //We may create another static class like IascEnvironment.ExitIfError(pProcess.ExitCode)
+
                 if (pProcess.ExitCode != 0)
                 {
                     Log.Error("Command executed with error, exit code [{0}]", pProcess.ExitCode);
