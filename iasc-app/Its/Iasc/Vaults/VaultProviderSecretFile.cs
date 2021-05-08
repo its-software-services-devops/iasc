@@ -9,6 +9,11 @@ namespace Its.Iasc.Vaults
         {
         }
 
+        private void LoadSecrets(string fname)
+        {
+
+        }
+
         public override void Load()
         {
             if (config.SecretFileName == null)
@@ -23,6 +28,9 @@ namespace Its.Iasc.Vaults
                 Log.Information("Secret file name [{0}] not found, so no secrets loaded!!!", config.SecretFileName);
                 return;
             }
+
+            //Do loading secret here
+            LoadSecrets(config.SecretFileName);
         }
     } 
 }

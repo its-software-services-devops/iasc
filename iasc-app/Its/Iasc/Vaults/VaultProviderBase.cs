@@ -5,7 +5,7 @@ namespace Its.Iasc.Vaults
     public abstract class VaultProviderBase : IVaultProvider
     {
         protected readonly VaultConfig config = null;
-        private Dictionary<string, string> secretMap = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> secretMap = new Dictionary<string, string>();
 
         public abstract void Load();
 
@@ -14,7 +14,7 @@ namespace Its.Iasc.Vaults
             secretMap[key] = value;
         }
 
-        public VaultProviderBase(VaultConfig cfg)
+        protected VaultProviderBase(VaultConfig cfg)
         {
             config = cfg;
         }

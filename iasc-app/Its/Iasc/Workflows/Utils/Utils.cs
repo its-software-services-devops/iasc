@@ -207,6 +207,11 @@ namespace Its.Iasc.Workflows.Utils
                 pProcess.Start();
                 output = pProcess.StandardOutput.ReadToEnd();
                 pProcess.WaitForExit();
+
+                if (pProcess.ExitCode != 0)
+                {
+                    Environment.Exit(1);
+                }
             }
 
             Log.Debug(output);
