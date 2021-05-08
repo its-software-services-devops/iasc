@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Its.Iasc.Workflows.Models;
+using Its.Iasc.Vaults;
 using Serilog;
 namespace Its.Iasc.Workflows.Utils
 {
@@ -59,7 +60,13 @@ namespace Its.Iasc.Workflows.Utils
             }
             else
             {
-                actualValue = defaultValue;
+                actualValue = Vault.GetValue(key);
+                if (actualValue == null)
+                {
+                    Log.Warning("Secret variable [{0}] not found", variable);
+                    actualValue = defaultValue;
+                }
+
                 //Secret things
                 displayValue = "***";
             }
@@ -191,7 +198,7 @@ namespace Its.Iasc.Workflows.Utils
         {
             string output = "";
 
-            (string execStr, string dispStr) = GetInterpolateStrings(argv, "VAR|ENV");
+            (string execStr, string dispStr) = GetInterpolateStrings(argv, "VAR|ENV|SEC");
             string cmdWithArg = string.Format("{0} {1}", cmd, dispStr);
             
             Log.Information("Executing command [{0}]...", cmdWithArg);

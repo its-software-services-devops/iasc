@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Its.Iasc.Workflows.Models;
@@ -44,26 +46,29 @@ namespace Its.Iasc.Copier
             Assert.AreEqual(expArgs, args);
         }
 
-        [TestCase("all-in-one.yaml", "", CopyType.Cp, "/all-in-one.yaml")]
-        [TestCase("", "dirname/subdir", CopyType.Cp, "/dirname/subdir")]
-        [TestCase("all-in-one.yaml", "", CopyType.Http, "-o /all-in-one.yaml")]
-        [TestCase("", "dirname/subdir", CopyType.Http, "-o /dirname/subdir")]
-        [TestCase("all-in-one.yaml", "", CopyType.GsUtilCp, "/all-in-one.yaml")]
-        [TestCase("", "dirname/subdir", CopyType.GsUtilCp, "/dirname/subdir")]
+        [TestCase("all-in-one.yaml", "", CopyType.Cp, "{0}/all-in-one.yaml")]
+        [TestCase("", "dirname/subdir", CopyType.Cp, "{0}/dirname/subdir")]
+        [TestCase("all-in-one.yaml", "", CopyType.Http, "-o {0}/all-in-one.yaml")]
+        [TestCase("", "dirname/subdir", CopyType.Http, "-o {0}/dirname/subdir")]
+        [TestCase("all-in-one.yaml", "", CopyType.GsUtilCp, "{0}/all-in-one.yaml")]
+        [TestCase("", "dirname/subdir", CopyType.GsUtilCp, "{0}/dirname/subdir")]
         public void GetDestPathTest(string toFile, string toDir, CopyType type, string expValue)
         {
+            string tmpPath = Path.GetTempPath();
+
             var cp = new UtilCopier();
             cp.SetCopyArg(copyArgs);
             cp.SetCopyCmd(copyCmds);
-            cp.SetWipDir("");
+            cp.SetWipDir(tmpPath);
 
             var ci = new CopyItem();
             ci.ToFile = toFile;
             ci.ToDir = toDir;
 
             var dstPath = cp.GetDestPath(ci, type);
+            var expPath = String.Format(expValue, tmpPath);
 
-            Assert.AreEqual(expValue, dstPath);
+            Assert.AreEqual(expPath, dstPath);
         }        
     }
 }
