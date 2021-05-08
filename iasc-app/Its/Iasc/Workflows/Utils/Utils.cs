@@ -217,7 +217,7 @@ namespace Its.Iasc.Workflows.Utils
 
                 if (pProcess.ExitCode != 0)
                 {
-                    Environment.Exit(1);
+                    Log.Error("Command executed with error, exit code [{0}]", pProcess.ExitCode);
                 }
             }
 

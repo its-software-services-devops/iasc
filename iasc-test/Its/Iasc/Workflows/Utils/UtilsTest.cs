@@ -107,5 +107,11 @@ namespace Its.Iasc.Workflows
             bool fileExist = File.Exists(absExpPath);
             Assert.AreEqual(shouldFound, fileExist);
         }
+
+        [TestCase("ls", "-lrt abc")]
+        public void ExeCmdWitheErrorTest(string cmd, string args)
+        {
+            Utils.Utils.Exec(cmd, args);
+        }        
     }
 }
