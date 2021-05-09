@@ -48,7 +48,7 @@ DATA=equalinp=assword2
         [TestCase(secret3, "DATA", "equalinp=assword2")]
         public void VaultGetValueTest(string content, string key, string expValue)
         {
-            var executor = new UtilsCommandExecutor();
+            var executor = new CommandExecutor();
             executor.Exec("echo", "hello");
             
             ICommandExecutor exec = CreateMockedExecutor(content);

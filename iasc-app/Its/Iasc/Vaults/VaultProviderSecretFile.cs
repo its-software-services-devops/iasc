@@ -11,7 +11,7 @@ namespace Its.Iasc.Vaults
     {
         private readonly Regex keyValueRegex = new Regex(@"^(.*?)=(.*)$");
         private readonly Regex gsutilRegex = new Regex(@"^gs://");
-        private ICommandExecutor cmdExec = new UtilsCommandExecutor();
+        private ICommandExecutor cmdExec = new CommandExecutor();
         private string gsutilCmd = "gsutil";
 
         public VaultProviderSecretFile(VaultConfig cfg) : base(cfg)

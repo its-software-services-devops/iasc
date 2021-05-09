@@ -1,6 +1,6 @@
 namespace Its.Iasc.Workflows.Utils
 {
-    public class UtilsCommandExecutor : ICommandExecutor
+    public class CommandExecutor : ICommandExecutor
     {
         public string Exec(string cmd, string argv)
         {
