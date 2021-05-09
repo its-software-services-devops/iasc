@@ -11,6 +11,7 @@ namespace Its.Iasc.Vaults
     {
         private readonly Regex keyValueRegex = new Regex(@"^(.*?)=(.*)$");
         private readonly Regex gsutilRegex = new Regex(@"^gs://");
+        private ICommandExecutor cmdExec = new UtilsCommandExecutor();
         private string gsutilCmd = "gsutil";
 
         public VaultProviderSecretFile(VaultConfig cfg) : base(cfg)
@@ -44,7 +45,7 @@ namespace Its.Iasc.Vaults
             if (gsutilRegex.IsMatch(fname))
             {
                 string args = String.Format("cat {0}", fname);
-                string content = Utils.Exec(gsutilCmd, args);
+                string content = cmdExec.Exec(gsutilCmd, args);
 
                 char[] delims = new[] { '\r', '\n' };
                 linesRead = content.Split(delims, StringSplitOptions.RemoveEmptyEntries);
@@ -55,6 +56,11 @@ namespace Its.Iasc.Vaults
             }
 
             AddSecretsArray(linesRead);
+        }
+
+        public void SetCmdExecutor(ICommandExecutor cmd)
+        {
+            cmdExec = cmd;
         }
 
         public void SetGsutilCmd(string cmd)
