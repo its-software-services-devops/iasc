@@ -3,6 +3,7 @@ using System.IO;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Its.Iasc.Workflows.Models;
+using Its.Iasc.Workflows.Utils;
 
 namespace Its.Iasc.Workflows
 {
@@ -113,5 +114,13 @@ namespace Its.Iasc.Workflows
         {
             Utils.Utils.Exec(cmd, args);
         }
+
+        [Test]
+        public void ExecutorTest()
+        {
+            var executor = new CommandExecutor();
+            string result = executor.Exec("echo", "hello");
+            Assert.AreEqual("hello\n", result);
+        }        
     }
 }
