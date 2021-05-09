@@ -1,21 +1,30 @@
 using Serilog;
+using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Its.Iasc.Workflows.Utils;
 
 namespace Its.Iasc.Vaults
 {
     public class VaultProviderSecretFile : VaultProviderBase
     {
         private readonly Regex keyValueRegex = new Regex(@"^(.*?)=(.*)$");
+        private readonly Regex gsutilRegex = new Regex(@"^gs://");
+        private string gsutilCmd = "gsutil";
 
         public VaultProviderSecretFile(VaultConfig cfg) : base(cfg)
         {
+            var gsutilPath = Environment.GetEnvironmentVariable("IASC_GSUTIL_PATH");
+            if (gsutilPath != null)
+            {
+                gsutilCmd = gsutilPath;
+            }
         }
 
-        private void LoadSecrets(string fname)
+        private void AddSecretsArray(IEnumerable<string> arr)
         {
-            var linesRead = File.ReadLines(fname);
-            foreach (var lineRead in linesRead)
+            foreach (var lineRead in arr)
             {
                 if (!keyValueRegex.IsMatch(lineRead))
                 {
@@ -26,7 +35,31 @@ namespace Its.Iasc.Vaults
                 var key = m.Groups[1].Value;
                 var value = m.Groups[2].Value;
                 AddKeyValue(key, value);
-            }            
+            } 
+        }
+
+        private void LoadSecrets(string fname)
+        {
+            IEnumerable<string> linesRead = null;
+            if (gsutilRegex.IsMatch(fname))
+            {
+                string args = String.Format("cat {0}", fname);
+                string content = Utils.Exec(gsutilCmd, args);
+
+                char[] delims = new[] { '\r', '\n' };
+                linesRead = content.Split(delims, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                linesRead = File.ReadLines(fname);
+            }
+
+            AddSecretsArray(linesRead);
+        }
+
+        public void SetGsutilCmd(string cmd)
+        {
+            gsutilCmd = cmd;
         }
 
         public override void Load()
@@ -34,13 +67,6 @@ namespace Its.Iasc.Vaults
             if (config.SecretFileName == null)
             {
                 Log.Information("Secret file name [{0}] is null, so no secrets loaded!!!", config.SecretFileName);
-                return;
-            }
-
-            bool fileExist = File.Exists(config.SecretFileName);
-            if (!fileExist)
-            {
-                Log.Information("Secret file name [{0}] not found, so no secrets loaded!!!", config.SecretFileName);
                 return;
             }
 

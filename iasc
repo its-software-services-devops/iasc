@@ -25,6 +25,6 @@ export IASC_TMP_DIR=${TMP_DIR}
 export IASC_VCS_URL=https://github.com/its-software-services-devops/infra-devops.git
 export IASC_VCS_REF=develop
 export IASC_VCS_FOLDER=gce-rke-manager
-export IASC_VAULT_CONFIG=samples/secrets/test-secrets.cfg
+export IASC_VAULT_SECRETS=gs://its-config-params/gcp-rke-demo-cluster/secrets.txt #samples/secrets/test-secrets.cfg
 
 dotnet iasc-app/bin/Debug/net5.0/iasc-app.dll $*

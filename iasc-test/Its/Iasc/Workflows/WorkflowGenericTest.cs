@@ -104,7 +104,7 @@ infraIasc:
         [Test]
         public void YamlTransformTest()
         {
-            Environment.SetEnvironmentVariable("IASC_GSTUIL_PATH", "echo");
+            Environment.SetEnvironmentVariable("IASC_GSUTIL_PATH", "echo");
 
             var cn = new GitCloner();
             cn.SetGitCmd("echo");

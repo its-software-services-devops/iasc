@@ -224,7 +224,6 @@ namespace Its.Iasc.Workflows.Utils
                 }
             }
 
-            Log.Debug(output);
             return output;            
         } 
     }

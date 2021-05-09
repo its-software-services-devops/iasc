@@ -20,7 +20,7 @@ namespace Its.Iasc
             var assemblyVersion = assembly.GetName().Version;
             Log.Information("Running [iasc] version [{0}]", assemblyVersion);
 
-            Vault.Setup(Environment.GetEnvironmentVariable("IASC_VAULT_CONFIG"));
+            Vault.Setup(Environment.GetEnvironmentVariable("IASC_VAULT_SECRETS"));
             Vault.Load();            
 
             Parser.Default.ParseArguments<InitOptions, PlanOptions, ApplyOptions, InfoOptions>(args)

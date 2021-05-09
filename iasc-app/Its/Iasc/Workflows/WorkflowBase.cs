@@ -45,7 +45,7 @@ namespace Its.Iasc.Workflows
             copier.SetSrcDir(ctx.SourceDir);
             copier.SetWipDir(ctx.WipDir);
 
-            var gsutilPath = Environment.GetEnvironmentVariable("IASC_GSTUIL_PATH");
+            var gsutilPath = Environment.GetEnvironmentVariable("IASC_GSUTIL_PATH");
             if (gsutilPath != null)
             {
                 copier.SetCopyCmd(CopyType.GsUtilCp, gsutilPath);
