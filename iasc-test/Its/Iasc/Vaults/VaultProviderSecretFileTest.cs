@@ -1,4 +1,5 @@
 using Moq;
+using System;
 using NUnit.Framework;
 using Its.Iasc.Workflows.Utils;
 
@@ -45,7 +46,9 @@ DATA=equalinp=assword2
         [TestCase(secret2, "PASSWORD", "password2")]
         [TestCase(secret3, "DATA", "equalinp=assword2")]
         public void VaultGetValueTest(string content, string key, string expValue)
-        {            
+        {
+            Environment.SetEnvironmentVariable("IASC_GSUTIL_PATH", "gsutil");
+            
             ICommandExecutor exec = CreateMockedExecutor(content);
 
             var vc = new VaultConfig();
