@@ -10,12 +10,12 @@ charts:
 #    params:
 #      - name: username
 #        value: ${SEC.HELM_USER}
-#
+
 #      - name: password
 #        value: ${SEC.HELM_PASSWORD}
-#
+
 #      - name: ca-file
-#        value: ${ENV.IASC_WIP_DIR}/harbor-registry-cert.pem
+#        value: ${ENV.IASC_WIP_DIR}/harbor_aaa.pem
 
 copy:
   - from: gs://its-config-params/gcp-rke-demo-cluster/harbor_aaa.pem

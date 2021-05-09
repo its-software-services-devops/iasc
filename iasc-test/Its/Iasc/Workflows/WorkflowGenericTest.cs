@@ -21,6 +21,15 @@ charts:
   helm-terraform-gcp:
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
     version: 1.1.5-rc8
+    params:
+      - name: username
+        value: ${SEC.HELM_USER}
+
+      - name: password
+        value: ${SEC.HELM_PASSWORD}
+
+      - name: ca-file
+        value: ${ENV.IASC_WIP_DIR}/harbor_aaa.pem
 
 copy:
   - from: https://axxx/xxxxsdfsdfsd.com/sdfsdfsdf/ccccc.txt

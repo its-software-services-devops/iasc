@@ -36,7 +36,9 @@ namespace Its.Iasc.Workflows.Utils
                 if (iasc.Alias == null)
                 {
                     iasc.Alias = string.Format("default-{0}", cnt);
-                }                                
+                }
+
+                iasc.ChartParams = chart.Params;                           
             }
 
             return manifest;

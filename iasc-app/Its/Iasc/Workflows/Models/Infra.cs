@@ -11,11 +11,13 @@ namespace Its.Iasc.Workflows.Models
         public string ChartUrl { get; set; }
         public string Version { get; set; }
         public string Alias { get; set; }
+        public CmdParam[] ChartParams { get; set; }
 
         public Infra()
         {
             Values = Array.Empty<string>();
             ValuesFiles = Array.Empty<string>();
+            ChartParams = Array.Empty<CmdParam>();
         }         
     } 
 }
