@@ -1,9 +1,8 @@
 #!/bin/bash
 
 dotnet build
-#dotnet run --project iasc-app $*
 
-export IASC_VCS_MODE=git #local
+export IASC_VCS_MODE=local #git #local
 
 SRC_DIR=samples/input-gce
 if [[ ${IASC_VCS_MODE} == "git" ]]
@@ -22,8 +21,9 @@ export IASC_SRC_DIR=${SRC_DIR}
 export IASC_WIP_DIR=${WIP_DIR}
 export IASC_TMP_DIR=${TMP_DIR}
 
-export IASC_VCS_URL=https://github.com/its-software-services-devops/infra-devops.git
+export IASC_VCS_URL='https://${SEC.GIT_USER}:${SEC.GIT_PASSWORD}@bitbucket.org/truedmp/devops-vm-provisioners.git' #https://github.com/its-software-services-devops/infra-devops.git
 export IASC_VCS_REF=develop
-export IASC_VCS_FOLDER=gce-rke-manager
+export IASC_VCS_FOLDER=vm-nfs-server #gce-rke-manager
+export IASC_VAULT_SECRETS=gs://its-config-params/gcp-rke-demo-cluster/secrets.txt #samples/secrets/test-secrets.cfg
 
 dotnet iasc-app/bin/Debug/net5.0/iasc-app.dll $*

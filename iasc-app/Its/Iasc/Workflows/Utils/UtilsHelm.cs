@@ -30,6 +30,19 @@ namespace Its.Iasc.Workflows.Utils
         public static void HelmAdd(Infra cfg)
         {
             string arg = string.Format(helmAddArg, cfg.Alias, cfg.ChartUrl);
+
+            var prms = new List<string>();
+            foreach (CmdParam param in cfg.ChartParams)            
+            {
+                prms.Add(String.Format("--{0}={1}", param.Name, param.Value));
+            }
+
+            if (prms.Count > 0)
+            {
+                var extraArgs = String.Join(" ", prms.ToArray());
+                arg = string.Format("{0} {1}", arg, extraArgs);
+            }
+
             Utils.Exec(helmCmd, arg);
         }
 

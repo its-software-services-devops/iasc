@@ -63,6 +63,6 @@ ENV IASC_SRC_DIR=/wip/input
 ENV IASC_WIP_DIR=/wip/output
 ENV IASC_TMP_DIR=/tmp
 ENV IASC_VCS_MODE=local
-ENV IASC_GSTUIL_PATH=/usr/bin/gsutil
+ENV IASC_GSUTIL_PATH=/usr/bin/gsutil
 
 ENTRYPOINT ["dotnet", "iasc-app.dll"]

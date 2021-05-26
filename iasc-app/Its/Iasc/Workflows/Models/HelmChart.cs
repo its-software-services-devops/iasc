@@ -1,3 +1,4 @@
+using System;
 
 namespace Its.Iasc.Workflows.Models
 {
@@ -5,6 +6,12 @@ namespace Its.Iasc.Workflows.Models
     {
         public string ChartUrl { get; set; }
         public string Version { get; set; }
-    }    
+        public CmdParam[] Params { get; set; }
+
+        public HelmChart()
+        {
+            Params = Array.Empty<CmdParam>();
+        }
+    }     
 }
 

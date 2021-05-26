@@ -21,9 +21,18 @@ charts:
   helm-terraform-gcp:
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
     version: 1.1.5-rc8
+    params:
+      - name: username
+        value: ${SEC.HELM_USER}
+
+      - name: password
+        value: ${SEC.HELM_PASSWORD}
+
+      - name: ca-file
+        value: ${ENV.IASC_WIP_DIR}/harbor_aaa.pem
 
 copy:
-  - from: https://xxx/xxxxsdfsdfsd.com/sdfsdfsdf/ccccc.txt
+  - from: https://axxx/xxxxsdfsdfsd.com/sdfsdfsdf/ccccc.txt
     toFile: ccccc.txt
   - from: scripts/*.bash
     toDir: scripts
@@ -91,15 +100,20 @@ infraIasc:
             Assert.AreEqual("configs", m.Copy[2].ToDir);          
         }
 
-        [Test]
-        public void YamlTransformTest()
+        private GenericCopier CreateGenericCopier()        
         {
-            Environment.SetEnvironmentVariable("IASC_GSTUIL_PATH", "echo");
-            
             var cp = new GenericCopier();            
             cp.SetCopyCmd(CopyType.GsUtilCp, "echo");
             cp.SetCopyCmd(CopyType.Cp, "echo");
             cp.SetCopyCmd(CopyType.Http, "echo");
+
+            return cp;
+        }
+
+        [Test]
+        public void YamlTransformTest()
+        {
+            Environment.SetEnvironmentVariable("IASC_GSUTIL_PATH", "echo");
 
             var cn = new GitCloner();
             cn.SetGitCmd("echo");
@@ -110,7 +124,7 @@ infraIasc:
             var result = wf.Load(yaml1);
 
             UtilsHelm.SetCmd("echo");
-            wf.SetCopier(cp);
+            wf.SetCopier(CreateGenericCopier());
             wf.SetCloner(cn);
             wf.Transform();
             UtilsHelm.ResetHelmCmd();
@@ -129,6 +143,7 @@ infraIasc:
             wf.GetContext().SourceDir = ".";
             wf.GetContext().WipDir = ".";
             wf.SetCloner(cn);
+            wf.SetCopier(CreateGenericCopier());
             var result = wf.LoadFile(path);
 
             UtilsHelm.SetCmd("echo");

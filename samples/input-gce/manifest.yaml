@@ -7,14 +7,26 @@ charts:
   helm-terraform-gcp:
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
     version: 1.1.5-rc8
+#    params:
+#      - name: username
+#        value: ${SEC.HELM_USER}
+
+#      - name: password
+#        value: ${SEC.HELM_PASSWORD}
+
+#      - name: ca-file
+#        value: ${ENV.IASC_WIP_DIR}/harbor_aaa.pem
 
 copy:
+  - from: gs://its-config-params/gcp-rke-demo-cluster/harbor_aaa.pem
+    toDir: ""
+
   - from: scripts/*.bash
     toDir: scripts
 
   - from: gs://its-config-params/gcp-rke-demo-cluster/id_rsa*
     toDir: ""
-    
+
 infraIasc:
   - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml]
     transformer: yaml2tf
