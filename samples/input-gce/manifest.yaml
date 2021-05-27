@@ -31,3 +31,4 @@ infraIasc:
   - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml]
     transformer: yaml2tf
     alias: gcp
+    namespace: test

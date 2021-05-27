@@ -64,6 +64,11 @@ namespace Its.Iasc.Workflows.Utils
             string valuesList = String.Join(" ", values.ToArray());
 
             string arg = string.Format(helmTplArg, cfg.ChartId, cfg.Alias, cfg.ChartId, valueFilePath, valuesList, cfg.Version);
+            if (!String.IsNullOrEmpty(cfg.Namespace))
+            {
+                arg = String.Format("{0} --namespace {1}", arg, cfg.Namespace);
+            }
+
             string output = Utils.Exec(helmCmd, arg);
 
             return output;
