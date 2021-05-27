@@ -52,6 +52,7 @@ infraIasc:
     version: 1.1.5-rc8
     alias: iasc-its-global
     chartUrl: https://its-software-services-devops.github.io/helm-terraform-gcp/
+    namespace: abcdefghi
 
   - valuesFiles: [iasc-its-gce-manager.yaml]
   - valuesFiles: [iasc-its-gce-rke.yaml]
