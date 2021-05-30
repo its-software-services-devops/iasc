@@ -31,6 +31,8 @@ charts:
       - name: ca-file
         value: ${ENV.IASC_WIP_DIR}/harbor_aaa.pem
 
+      - name: insecure-skip-tls-verify
+        noValue: true
 copy:
   - from: https://axxx/xxxxsdfsdfsd.com/sdfsdfsdf/ccccc.txt
     toFile: ccccc.txt
