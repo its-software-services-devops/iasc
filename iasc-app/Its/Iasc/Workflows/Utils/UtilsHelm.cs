@@ -34,7 +34,14 @@ namespace Its.Iasc.Workflows.Utils
             var prms = new List<string>();
             foreach (CmdParam param in cfg.ChartParams)            
             {
-                prms.Add(String.Format("--{0}={1}", param.Name, param.Value));
+                if (param.NoValue)
+                {
+                    prms.Add(String.Format("--{0}", param.Name));
+                }
+                else
+                {
+                    prms.Add(String.Format("--{0}={1}", param.Name, param.Value));
+                }
             }
 
             if (prms.Count > 0)
