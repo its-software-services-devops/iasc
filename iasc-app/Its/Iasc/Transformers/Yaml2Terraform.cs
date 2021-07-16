@@ -27,7 +27,7 @@ namespace Its.Iasc.Transformers
                     //Skipping the ---
                     if (!string.IsNullOrEmpty(currentFname))
                     {
-                        UtilsTransformer.WriteFileContent(GetContext(), currentFname, contents);
+                        UtilsTransformer.WriteFileContent(GetContext(), currentFname, contents, cfg.ToDir);
                         contents.Clear();
                     }
                 }
@@ -46,7 +46,7 @@ namespace Its.Iasc.Transformers
 
             if (contents.Count > 0)
             {
-                UtilsTransformer.WriteFileContent(GetContext(), currentFname, contents);
+                UtilsTransformer.WriteFileContent(GetContext(), currentFname, contents, cfg.ToDir);
             }
         }
 

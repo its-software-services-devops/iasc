@@ -33,6 +33,8 @@ namespace Its.Iasc.Copier
             copier.SetCopyArg(copyArgs);
             copier.SetCopyCmd(copyCmds);
 
+            Utils.CopyDirectory(srcDir, wipDir);
+
             foreach (CopyItem ci in copyItems)
             {
                 (CopyType ct, string cmd, string args) = copier.GetCpCommand(ci);

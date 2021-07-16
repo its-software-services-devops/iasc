@@ -21,9 +21,6 @@ copy:
   - from: gs://its-config-params/gcp-rke-demo-cluster/harbor_aaa.pem
     toDir: ""
 
-  - from: scripts/*.bash
-    toDir: scripts
-
   - from: gs://its-config-params/gcp-rke-demo-cluster/id_rsa*
     toDir: ""
 
@@ -32,3 +29,4 @@ infraIasc:
     transformer: yaml2tf
     alias: gcp
     namespace: test
+    #toDir: rendered/out

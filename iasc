@@ -9,7 +9,7 @@ if [[ ${IASC_VCS_MODE} == "git" ]]
 then
   SRC_DIR=samples/wip/input
   mkdir -p ${SRC_DIR}
-  rm -rf ${SRC_DIR}/*  
+  rm -rf ${SRC_DIR}/*
 fi
 
 WIP_DIR=samples/wip/output
