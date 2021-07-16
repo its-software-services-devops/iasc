@@ -135,7 +135,7 @@ namespace Its.Iasc.Workflows.Utils
             if (!dir.Exists)
             {
                 Log.Error("Directory [{0}] not found!!!", sourceDirName);
-                return;            
+                return;
             }
 
             string name = Path.GetFileName(sourceDirName);
