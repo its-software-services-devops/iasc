@@ -59,7 +59,7 @@ jobs:
         message: "Start building [iasc] [${{ steps.prep.outputs.version }}]..."
 
     - name: SonarScanner for .NET 5 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@2.0
+      uses: highbyte/sonarscan-dotnet@v2.1.1-beta
       with:
         # The key of the SonarQube project
         sonarProjectKey: its-software-services-devops_iasc
