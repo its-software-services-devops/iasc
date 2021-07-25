@@ -58,6 +58,12 @@ infraIasc:
 
   - valuesFiles: [iasc-its-gce-manager.yaml]
   - valuesFiles: [iasc-its-gce-rke.yaml]
+
+  - valuesFiles: [iasc-its-gce-rke.yaml]
+    chartId: helm-terraform-gcp
+    version: 1.1.5-rc8
+    alias: iasc-its-globalaaaa
+    template: sshsksksk  
 ";
         [SetUp]
         public void Setup()
@@ -79,7 +85,7 @@ infraIasc:
 
             Assert.AreEqual("helm-terraform-gcp", m.Config.DefaultChartId);
             Assert.AreEqual(1, m.Charts.Count);
-            Assert.AreEqual(4, m.InfraIasc.Length);
+            Assert.AreEqual(5, m.InfraIasc.Length);
 
             var chart = m.Charts["helm-terraform-gcp"];
 
