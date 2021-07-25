@@ -79,7 +79,7 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Activate GCP service account
-      uses: google-github-actions/github-actions/setup-gcloud@master
+      uses: google-github-actions/github-actions/setup-gcloud@v0.2.1
       with:
         service_account_email: ${{ secrets.GCR_EMAIL }}
         service_account_key: ${{ secrets.GCR_KEY }}
