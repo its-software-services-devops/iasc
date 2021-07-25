@@ -53,6 +53,16 @@ namespace Its.Iasc.Workflows.Utils
             Utils.Exec(helmCmd, arg);
         }
 
+        private static string GetTemplateName(Infra cfg)
+        {
+            if (!string.IsNullOrEmpty(cfg.Template))
+            {
+                return cfg.Template;
+            }
+
+            return cfg.ChartId;
+        }
+
         public static string HelmTemplate(Infra cfg)
         {
             var valueFiles = new List<string>();
@@ -70,7 +80,9 @@ namespace Its.Iasc.Workflows.Utils
             }
             string valuesList = String.Join(" ", values.ToArray());
 
-            string arg = string.Format(helmTplArg, cfg.ChartId, cfg.Alias, cfg.ChartId, valueFilePath, valuesList, cfg.Version);
+            string tplName = GetTemplateName(cfg);
+
+            string arg = string.Format(helmTplArg, tplName, cfg.Alias, cfg.ChartId, valueFilePath, valuesList, cfg.Version);
             if (!String.IsNullOrEmpty(cfg.Namespace))
             {
                 arg = String.Format("{0} --namespace {1}", arg, cfg.Namespace);

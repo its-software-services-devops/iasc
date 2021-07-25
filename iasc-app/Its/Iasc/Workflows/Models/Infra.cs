@@ -14,6 +14,7 @@ namespace Its.Iasc.Workflows.Models
         public string Namespace { get; set; }
         public CmdParam[] ChartParams { get; set; }
         public string ToDir { get; set; }
+        public string Template { get; set; }
 
         public Infra()
         {

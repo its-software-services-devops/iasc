@@ -17,6 +17,15 @@ charts:
 #      - name: ca-file
 #        value: ${ENV.IASC_WIP_DIR}/harbor_aaa.pem
 
+repositories:
+  - id: infra-addon-dev
+    branch: dev
+    url: https://github.com/its-software-services-devops/infra-addon.git
+
+  - id: infra-addon-prod
+    branch: prod
+    url: https://github.com/its-software-services-devops/infra-addon.git
+
 copy:
   - from: gs://its-config-params/gcp-rke-demo-cluster/harbor_aaa.pem
     toDir: ""
@@ -24,9 +33,20 @@ copy:
   - from: gs://its-config-params/gcp-rke-demo-cluster/id_rsa*
     toDir: ""
 
+  - from: repo:://infra-addon-dev/loki-stack
+    toDir: dev-loki-stack
+
+  - from: repo:://infra-addon-prod/loki-stack
+    toDir: prod-loki-stack
+
 infraIasc:
   - valuesFiles: [iasc-its-global.yaml, iasc-its-gce-manager.yaml]
     transformer: yaml2tf
     alias: gcp
     namespace: test
     #toDir: rendered/out
+
+  - valuesFiles: [dev-loki-stack/loki.yaml, values/loki-stack/infra-addon-dev.yaml]
+    transformer: yaml2tf
+    alias: gcp
+    namespace: test
