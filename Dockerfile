@@ -7,8 +7,8 @@ RUN apt-get -y update
 RUN apt-get -y install curl
 RUN apt-get -y install unzip
 
-RUN curl -LO https://releases.hashicorp.com/terraform/0.14.7/terraform_0.14.7_linux_amd64.zip
-RUN unzip terraform_0.14.7_linux_amd64.zip
+RUN curl -LO https://releases.hashicorp.com/terraform/1.0.5/terraform_1.0.5_linux_amd64.zip
+RUN unzip terraform_1.0.5_linux_amd64.zip
 RUN cp terraform /usr/local/bin/
 RUN terraform -v
 
