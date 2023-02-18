@@ -12,8 +12,8 @@ RUN unzip terraform_1.0.5_linux_amd64.zip
 RUN cp terraform /usr/local/bin/
 RUN terraform -v
 
-RUN curl -LO https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz
-RUN tar -xvf helm-v3.5.2-linux-amd64.tar.gz
+RUN curl -LO https://get.helm.sh/helm-v3.11.1-linux-amd64.tar.gz
+RUN tar -xvf helm-v3.11.1-linux-amd64.tar.gz
 RUN cp linux-amd64/helm /usr/local/bin/
 RUN helm version
 
