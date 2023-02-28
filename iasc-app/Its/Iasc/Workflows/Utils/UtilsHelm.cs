@@ -64,7 +64,7 @@ namespace Its.Iasc.Workflows.Utils
             return cfg.ChartId;
         }
 
-        public static string IsHelmOci(Infra cfg)
+        public static bool IsHelmOci(Infra cfg)
         {
             string url = cfg.ChartUrl;
             return url.Contains("oci://");
