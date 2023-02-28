@@ -11,6 +11,7 @@ namespace Its.Iasc.Workflows.Utils
         private static string helmCmd = defaultHelmCmd;
         private static string helmAddArg = "repo add {0} {1}";
         private static string helmTplArg = "template {0} {1}/{2} {3} {4} --version {5}";
+        private static string helmTplArgOci = "template {0} {1} {2} {3} --version {4}";
 
         public static void SetCmd(string cmd)
         {
@@ -63,6 +64,12 @@ namespace Its.Iasc.Workflows.Utils
             return cfg.ChartId;
         }
 
+        public static string IsHelmOci(Infra cfg)
+        {
+            string url = cfg.ChartUrl;
+            return url.Contains("oci://");
+        }
+
         public static string HelmTemplate(Infra cfg)
         {
             var valueFiles = new List<string>();
@@ -83,6 +90,11 @@ namespace Its.Iasc.Workflows.Utils
             string tplName = GetTemplateName(cfg);
 
             string arg = string.Format(helmTplArg, tplName, cfg.Alias, cfg.ChartId, valueFilePath, valuesList, cfg.Version);
+            if (IsHelmOci(cfg))
+            {
+                arg = string.Format(helmTplArgOci, tplName, cfg.ChartUrl, valueFilePath, valuesList, cfg.Version);
+            }
+
             if (!String.IsNullOrEmpty(cfg.Namespace))
             {
                 arg = String.Format("{0} --namespace {1}", arg, cfg.Namespace);

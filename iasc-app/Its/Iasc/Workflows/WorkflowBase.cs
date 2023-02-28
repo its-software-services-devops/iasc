@@ -73,8 +73,15 @@ namespace Its.Iasc.Workflows
             ITransformer xform = new DefaultTransformer(ctx);
             foreach (var iasc in manifest.InfraIasc)
             {
-                UtilsHelm.HelmAdd(iasc);
-                string output = UtilsHelm.HelmTemplate(iasc);
+                if (!UtilsHelm.IsHelmOci(iasc))
+                {
+                    UtilsHelm.HelmAdd(iasc);
+                    string output = UtilsHelm.HelmTemplate(iasc);
+                }
+                else
+                {
+                    string output = UtilsHelm.HelmTemplate(iasc);
+                }
 
                 var items = new List<string>();
                 items.Add(output);
