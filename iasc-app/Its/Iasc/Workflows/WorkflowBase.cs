@@ -76,12 +76,8 @@ namespace Its.Iasc.Workflows
                 if (!UtilsHelm.IsHelmOci(iasc))
                 {
                     UtilsHelm.HelmAdd(iasc);
-                    string output = UtilsHelm.HelmTemplate(iasc);
                 }
-                else
-                {
-                    string output = UtilsHelm.HelmTemplate(iasc);
-                }
+                string output = UtilsHelm.HelmTemplate(iasc);
 
                 var items = new List<string>();
                 items.Add(output);
